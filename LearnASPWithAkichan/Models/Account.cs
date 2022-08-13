@@ -12,5 +12,14 @@ namespace LearnASPWithAkichan.Models
         public string? StudentId { get; set; }
 
         public virtual Student? Student { get; set; }
+
+        public Account()
+        {
+            Id=0;
+            Username = "AkiChan";
+            Password = "0096";
+            Role = 0;
+            StudentId = "21748010340042";
+;       }
     }
 }

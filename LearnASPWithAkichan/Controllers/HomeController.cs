@@ -8,6 +8,10 @@ namespace LearnASPWithAkichan.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
+
+        private Account aki = new Account();
+        
+
         public HomeController(ILogger<HomeController> logger)
         {
             _logger = logger;
@@ -15,6 +19,7 @@ namespace LearnASPWithAkichan.Controllers
 
         public IActionResult Index()
         {
+            ViewData["Messages"] = aki;
             return View();
         }
 

@@ -1,4 +1,6 @@
-﻿@{
+﻿@using LearnASPWithAkichan.Models;
+
+@{
     ViewData["Title"] = "Đăng ký môn học";
 }
 
@@ -60,7 +62,10 @@
                         <li class="nav-item">
                             <a class="nav-link profile" href="javascript:void(0)">
                                 <div class="profile-info">
-                                    <span id="profile-name">Thông tin SV - Mã SV</span>
+                                    @{
+                                        Account user = (Account)ViewData["Messages"];
+                                    }
+                                    <span id="profile-name"> @user.Username - @user.StudentId </span>
                                 </div>
 
                                 <div class="avatar">
