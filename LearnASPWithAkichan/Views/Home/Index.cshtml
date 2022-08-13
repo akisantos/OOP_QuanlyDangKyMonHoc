@@ -1,0 +1,150 @@
+﻿@{
+    ViewData["Title"] = "Đăng ký môn học";
+}
+
+@section AddToHead{
+    <link rel="stylesheet" href="~/css/index.css" type="text/css" />
+}
+
+    <div class="blackDiv"></div>
+    <aside id="leftside-menu" class="leftsideMenu">
+        <div class="logo">
+            <a href="index.html" class="logoLink">Chú bé DAN</a>
+        </div>
+        <div class="menuShadow">
+        </div>
+        <ul class="menu">
+            <li class="menu-item ">
+                <a  class="menu-link" asp-controller="Home" asp-action="ThongBao" asp-area="">
+                    <i class="menu-icon fa fa-info"></i>
+                    <div>Thông báo</div>
+                </a>
+            </li>
+
+            <li class="menu-item active">
+                <a  class="menu-link" asp-controller="Home" asp-action="Index" asp-area="">
+                    <i class="menu-icon fa fa-pencil"></i>
+                    <div>Đăng ký học phần</div>
+                </a>
+            </li>
+
+            <li class="menu-item">
+                <a class="menu-link" asp-controller="Home" asp-action="Login" asp-area="">
+                    <i class="menu-icon fa fa-eye"></i>
+                    <div>Học phần đã đăng ký</div>
+                </a>
+            </li>
+
+            <li class="menu-item">
+                <a href="#" class="menu-link">
+                    <i class="menu-icon fa fa-credit-card"></i>
+                    <div>Thanh toán</div>
+                </a>
+            </li>
+
+        </ul>
+    </aside>
+
+    <div class="container-fluid maincontentwrapper">
+        <div class="row content">
+
+            <nav class="mainContentNavbar">
+                <div class="toggleLeftSideMenu">
+                    <a href="javascript:void(0)" id="toggle-leftside">
+                        <i class="fa fa-bars" aria-hidden="true"></i>
+
+                    </a>
+                </div>
+                <div class="navbarContent">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link profile" href="javascript:void(0)">
+                                <div class="profile-info">
+                                    <span id="profile-name">Thông tin SV - Mã SV</span>
+                                </div>
+
+                                <div class="avatar">
+                                    <img src="https://i.kym-cdn.com/entries/icons/original/000/040/642/terrifiednootnoot.jpg" alt="avt" srcset="">
+                                </div>
+                            </a>
+
+                            <div class="dropdownMenu">
+                                <a class="dropdownItem" asp-controller="Home" asp-action="Login" asp-area=""> <i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+
+            </nav>
+
+            <div class="filter">
+                <ul>
+                    <li class="btn btn-outline btnActive" id="theo-ke-hoach-btn">Theo kế hoạch</li>
+                    <li class="btn btn-outline" id="ngoai-ke-hoach-btn">Ngoài kế hoạch</li>
+                </ul>
+            </div>
+
+            <div class="contentWrapper">
+
+                <div class="contentCard longCard">
+                    <div class="cardContent">
+                       <div class="cardMainContent">
+                            <h2>Đăng ký học phần</h2>
+                            <br>
+                            <p>Nếu bạn không tìm thấy học phần nào nghĩa là chưa đến đợt đăng ký!</p>
+                       </div>
+
+                       <div class="cardSubContent">
+                            
+
+                       </div>
+                    </div>
+
+                    <div class="cardImage">
+                        <img src="~/css/images/man-with-laptop-light.png" alt="ThongBao" srcset="">
+                    </div>
+
+                </div>      
+                
+
+                <div class="contentCard">
+                    <div class="cardContent">
+                      <div class="cardMainContent">
+                        <p>Mã: 0001122333</p>
+                        <h5>Lorem ipsum dolor sit.</h5>
+                        <p>Số tín chỉ: 4</p>
+                      </div>
+                      <div class="cardSubContent">
+                        <p>Môn tiên quyết: Lập trình cơ bản, Cấu trúc dữ liệu và giải thuật 1, Kinh tế chính trị</p>
+                      </div>
+                    </div>
+                    <div class="cardImage">
+                      <div class="buttonAction">
+                        <a href="#" class="btn btn-outline dangKy" id="register-btn" value='+index+'> Đăng ký</a>
+                        <a href="#" class="btn btn-outline"> Đánh dấu</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+            </div>
+        </div>
+    </div>
+
+    <div class="infoModal">
+        <div class="modalTitle">
+            <p id="modal-title">THÔNG Đ*... THÔNG BÁO</p>
+        </div>
+
+        <div class="modalContent">
+           <div class="modalLogo">
+                <img src="~/css/images/man-with-laptop-light.png" alt="ThongBao" srcset="">
+           </div>
+
+           <div class="modalMainContent">
+                <span id="modal-content">Bạn đã đăng ký thành công!</span>
+           </div>
+        </div>
+    </div>
+    <script src="~/js/index.js"></script>
