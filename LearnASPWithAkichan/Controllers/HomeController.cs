@@ -10,7 +10,17 @@ namespace LearnASPWithAkichan.Controllers
 
 
         private Account aki = new Account();
-        
+
+        private List<Student> akiList = new List<Student>();
+
+        void LoadStudent()
+        {
+            for (int i = 0; i < 10; i++)
+            {
+                Student aki = new Student();
+                akiList.Add(aki);
+            }
+        }        
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -19,7 +29,9 @@ namespace LearnASPWithAkichan.Controllers
 
         public IActionResult Index()
         {
+            LoadStudent();
             ViewData["Messages"] = aki;
+            ViewBag.Student = akiList;
             return View();
         }
 

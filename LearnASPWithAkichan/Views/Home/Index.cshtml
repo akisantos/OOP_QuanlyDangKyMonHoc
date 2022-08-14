@@ -112,26 +112,33 @@
 
                 </div>      
                 
+                @{
+                    foreach (var item in ViewBag.Student)
+                    {
+                            <div class="contentCard">
+                                <div class="cardContent">
+                                    <div class="cardMainContent">
+                                        <p>Mã SV: @item.Id</p>
+                                        <h5>Họ tên: @item.Fullname</h5>
+                                        <p>@item.Department</p>
+                                    </div>
 
-                <div class="contentCard">
-                    <div class="cardContent">
-                      <div class="cardMainContent">
-                        <p>Mã: 0001122333</p>
-                        <h5>Lorem ipsum dolor sit.</h5>
-                        <p>Số tín chỉ: 4</p>
-                      </div>
-                      <div class="cardSubContent">
-                        <p>Môn tiên quyết: Lập trình cơ bản, Cấu trúc dữ liệu và giải thuật 1, Kinh tế chính trị</p>
-                      </div>
-                    </div>
-                    <div class="cardImage">
-                      <div class="buttonAction">
-                        <a href="#" class="btn btn-outline dangKy" id="register-btn" value='+index+'> Đăng ký</a>
-                        <a href="#" class="btn btn-outline"> Đánh dấu</a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
+                                    <div class="cardSubContent">
+                                        <p>@item.Address</p>
+                                    </div>
+                                </div>
+
+                                    <div class="cardImage">
+                                        <div class="buttonAction">
+                                            <a href="#" class="btn btn-outline dangKy" id="register-btn" value='+index+'> Đăng ký</a>
+                                            <a href="#" class="btn btn-outline"> Đánh dấu</a>
+                                        </div>
+                                    </div>
+                            </div>
+                    }
+                }
+
+                
                 
             </div>
         </div>
