@@ -17,7 +17,15 @@ namespace LearnASPWithAkichan.Controllers
         {
             _context = context;
         }
-
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> DangNhap(Account a)
+        {
+            var acc = await _context.Accounts.FirstOrDefaultAsync(
+                x => x.Username == a.Username && x.Password == a.Password);
+            if (acc != null) return RedirectToAction("Index", "Home");
+            else return View("Login");
+        }
         // GET: Accounts
         public async Task<IActionResult> Index()
         {
