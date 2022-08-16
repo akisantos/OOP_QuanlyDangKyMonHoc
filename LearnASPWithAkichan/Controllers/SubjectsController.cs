@@ -25,6 +25,12 @@ namespace LearnASPWithAkichan.Controllers
             return View(await registrion_course2Context.ToListAsync());
         }
 
+        public async Task<IActionResult> DangKy()
+        {
+            var registrion_course2Context = _context.Subjects.Include(s => s.Department).Include(s => s.SubjectNavigation);
+            return View(await registrion_course2Context.ToListAsync());
+        }
+
         // GET: Subjects/Details/5
         public async Task<IActionResult> Details(string id)
         {

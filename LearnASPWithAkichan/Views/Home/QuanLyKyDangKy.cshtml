@@ -1,5 +1,6 @@
 ﻿@{
-    ViewData["Title"] = "Đăng ký môn học";
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section AddToHead{
@@ -7,31 +8,38 @@
 }
 
 @section AddItemToHeader{
-            <li class="menu-item ">
-                <a  class="menu-link" asp-controller="Home" asp-action="ThongBao" asp-area="">
-                    <i class="menu-icon fa fa-info"></i>
-                    <div>Thông báo</div>
-                </a>
-            </li>
-
-            <li class="menu-item active">
-                <a  class="menu-link" asp-controller="Subjects" asp-action="DangKy" asp-area="">
-                    <i class="menu-icon fa fa-pencil"></i>
-                    <div>Đăng ký học phần</div>
-                </a>
-            </li>
-
-            <li class="menu-item">
-                <a class="menu-link" asp-controller="Home" asp-action="Login" asp-area="">
-                    <i class="menu-icon fa fa-eye"></i>
-                    <div>Học phần đã đăng ký</div>
-                </a>
-            </li>
-
-            <li class="menu-item">
+            <li class="menu-item active ">
                 <a href="#" class="menu-link">
-                    <i class="menu-icon fa fa-credit-card"></i>
-                    <div>Thanh toán</div>
+                    <i class="menu-icon fa fa-pencil"></i>
+                    <div>Quản lý kỳ đăng ký</div>
+                </a>
+            </li>
+
+            <li class="menu-item ">
+                <a asp-controller="Subjects" asp-action="Index" class="menu-link">
+                    <i class="menu-icon fa fa-book" aria-hidden="true"></i>
+                    <div>Quản lý môn học</div>
+                </a>
+            </li>
+
+            <li class="menu-item ">
+                <a asp-controller="Students" asp-action="Index" class="menu-link">
+                    <i class="menu-icon fa fa-address-book" aria-hidden="true"></i>
+                    <div>Quản lý sinh viên</div>
+                </a>
+            </li>
+
+            <li class="menu-item ">
+                <a asp-controller="Departments" asp-action="Index" class="menu-link">
+                    <i class="menu-icon fa fa-users" aria-hidden="true"></i>
+                    <div>Quản lý khoa</div>
+                </a>
+            </li>
+
+            <li class="menu-item ">
+                <a asp-controller="Home" asp-action="Login" class="menu-link">
+                    <i class="menu-icon fa fa-sign-out"></i>
+                    <div>Đăng xuất khỏi trái đất</div>
                 </a>
             </li>
 }
@@ -48,14 +56,15 @@
                 </div>
                 <div class="navbarContent">
                     <ul class="navbar-nav">
+
                         <li class="nav-item">
                             <a class="nav-link profile" href="javascript:void(0)">
                                 <div class="profile-info">
-                                    <span id="profile-name">Thông tin SV - Mã SV</span>
+                                    <span id="profile-name">Thông tin Admin</span>
                                 </div>
 
                                 <div class="avatar">
-                                    <img src="https://i.kym-cdn.com/entries/icons/original/000/040/642/terrifiednootnoot.jpg" alt="avt" srcset="">
+                                    <img src="https://i.pinimg.com/736x/3e/90/18/3e90181cc67d3650ad9de822e0cabd4d.jpg" alt="avt" srcset="">
                                 </div>
                             </a>
 
@@ -71,8 +80,8 @@
 
             <div class="filter">
                 <ul>
-                    <li class="btn btn-outline btnActive" id="theo-ke-hoach-btn">Theo kế hoạch</li>
-                    <li class="btn btn-outline" id="ngoai-ke-hoach-btn">Ngoài kế hoạch</li>
+                    <li class="btn btn-outline"><a asp-action="TaoKyDangKy"><i class="fa fa-plus" aria-hidden="true"></i> Thêm mới </a></li>
+                    <li class="btn btn-outline" >Action 2</li>
                 </ul>
             </div>
 
@@ -81,9 +90,9 @@
                 <div class="contentCard longCard">
                     <div class="cardContent">
                        <div class="cardMainContent">
-                            <h2>Đăng ký học phần</h2>
+                            <h2>Quản lý kỳ đăng ký học phần</h2>
                             <br>
-                            <p>Nếu bạn không tìm thấy học phần nào nghĩa là chưa đến đợt đăng ký!</p>
+                            <p></p>
                        </div>
 
                        <div class="cardSubContent">
@@ -99,7 +108,29 @@
                 </div>      
                 
 
-                <div class="contentCard">
+                @for (var i = 0; i < @ViewBag.StartTime.Length; i++)
+                {
+                    <div class="contentCard">
+                    <div class="cardContent">
+                      <div class="cardMainContent">
+                        <p></p>
+                        <h5>Kỳ đăng ký @i</h5>
+                        <p>@ViewBag.StartTime[i] - @ViewBag.EndTime[i] </p>
+                      </div>
+                      <div class="cardSubContent">
+                       
+                      </div>
+                    </div>
+                    <div class="cardImage">
+                      <div class="buttonAction">
+                        <a href="#" class="btn btn-outline dangKy" id="register-btn" > Chỉnh sửa</a>
+                      </div>
+                    </div>
+                  </div>
+                }
+
+
+                @*<div class="contentCard">
                     <div class="cardContent">
                       <div class="cardMainContent">
                         <p>Mã: 0001122333</p>
@@ -117,25 +148,10 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div>*@
                 
             </div>
         </div>
     </div>
 
-    <div class="infoModal">
-        <div class="modalTitle">
-            <p id="modal-title">THÔNG Đ*... THÔNG BÁO</p>
-        </div>
-
-        <div class="modalContent">
-           <div class="modalLogo">
-                <img src="~/css/images/man-with-laptop-light.png" alt="ThongBao" srcset="">
-           </div>
-
-           <div class="modalMainContent">
-                <span id="modal-content">Bạn đã đăng ký thành công!</span>
-           </div>
-        </div>
-    </div>
     <script src="~/js/index.js"></script>

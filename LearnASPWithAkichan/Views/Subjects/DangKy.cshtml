@@ -1,5 +1,8 @@
-﻿@{
-    ViewData["Title"] = "Đăng ký môn học";
+﻿@model IEnumerable<LearnASPWithAkichan.Models.Subject>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 @section AddToHead{
@@ -81,9 +84,9 @@
                 <div class="contentCard longCard">
                     <div class="cardContent">
                        <div class="cardMainContent">
-                            <h2>Đăng ký học phần</h2>
+                            <h2>Danh sách các môn học</h2>
                             <br>
-                            <p>Nếu bạn không tìm thấy học phần nào nghĩa là chưa đến đợt đăng ký!</p>
+                            <p>Thông tin của môn học</p>
                        </div>
 
                        <div class="cardSubContent">
@@ -97,9 +100,31 @@
                     </div>
 
                 </div>      
-                
-
+            
+            @foreach (var item in Model)
+            {
                 <div class="contentCard">
+                    <div class="cardContent">
+                      <div class="cardMainContent">
+                        <p></p>
+                        <h5>@Html.DisplayFor(modelItem => item.Name)</h5>
+                        <p>@Html.DisplayFor(modelItem => item.Credits) tín chỉ</p>
+                      </div>
+                      <div class="cardSubContent">
+         
+                      </div>
+                    </div>
+                    <div class="cardImage">
+                      <div class="buttonAction">    
+                        <a class="btn btn-outline" > Đăng ký </a>
+                      </div>
+                    </div>
+                </div>
+
+            }
+
+
+                @*<div class="contentCard">
                     <div class="cardContent">
                       <div class="cardMainContent">
                         <p>Mã: 0001122333</p>
@@ -117,25 +142,10 @@
                       </div>
                     </div>
                   </div>
-                </div>
+                </div>*@
                 
             </div>
         </div>
     </div>
 
-    <div class="infoModal">
-        <div class="modalTitle">
-            <p id="modal-title">THÔNG Đ*... THÔNG BÁO</p>
-        </div>
-
-        <div class="modalContent">
-           <div class="modalLogo">
-                <img src="~/css/images/man-with-laptop-light.png" alt="ThongBao" srcset="">
-           </div>
-
-           <div class="modalMainContent">
-                <span id="modal-content">Bạn đã đăng ký thành công!</span>
-           </div>
-        </div>
-    </div>
     <script src="~/js/index.js"></script>
