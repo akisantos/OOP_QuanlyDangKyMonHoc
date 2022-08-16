@@ -186,6 +186,18 @@ body {
         font-size: 14px;
     }
 
+.input-box .user-box select {
+    width: 100%;
+    padding: 0.4rem 0;
+    font-size: 16px;
+    color: #000;
+    border: none;
+    border-bottom: 0.1rem solid rgba(0, 0, 0, 0);
+    outline: none;
+    background: transparent;
+    transition: .5s;
+}
+
 .login-box form a {
     position: relative;
     display: inline-block;

@@ -13,9 +13,9 @@ namespace LearnASPWithAkichan.Controllers
     {
         private readonly registrion_course2Context _context;
 
-        public SubjectsController(registrion_course2Context context)
+        public SubjectsController(registrion_course2Context db)
         {
-            _context = context;
+            _context = db;
         }
 
         // GET: Subjects

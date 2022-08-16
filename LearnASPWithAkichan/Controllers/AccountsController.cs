@@ -26,6 +26,11 @@ namespace LearnASPWithAkichan.Controllers
             if (acc != null) return RedirectToAction("Index", "Home");
             else return View("Login");
         }
+        //login
+        public IActionResult Login()
+        {
+            return View();
+        }
         // GET: Accounts
         public async Task<IActionResult> Index()
         {
