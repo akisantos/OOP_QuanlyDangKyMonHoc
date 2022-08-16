@@ -430,6 +430,15 @@ body {
     margin: 0.25rem;
 }
 
+.btn a {
+
+    text-decoration:none;
+}
+
+.btn a:hover {
+    color: #fff;
+}
+
 .btn-outline {
     color: #696cff !important;
     border-color: #696cff !important;
@@ -542,6 +551,51 @@ body {
     z-index: 10;
 }
 
+.input-box .user-box {
+    position: relative;
+}
+
+    .input-box .user-box input {
+        width: 100%;
+        padding: 0.4rem 0;
+        font-size: 16px;
+        color: #000;
+        border: none;
+        border-bottom: 0.1rem solid rgba(0, 0, 0, 0);
+        outline: none;
+        background: transparent;
+        transition: .5s;
+    }
+
+        .input-box .user-box input:focus {
+            border-bottom: 0.1rem solid rgba(0, 0, 0, 0.077);
+        }
+
+    .input-box .user-box label {
+        position: absolute;
+        top: 0rem;
+        left: 0;
+        padding: 10px 0;
+        font-size: 16px;
+        color: #000;
+        pointer-events: none;
+        transition: .5s;
+    }
+
+    .input-box .user-box input:focus ~ label,
+    .input-box .user-box input:valid ~ label {
+         top: -15px; 
+        /*left: -5rem;*/
+        color: #8e9baa;
+        font-size: 10px;
+    }
+.user-box .searchBtn{
+    display:none;
+}
+.user-box input:focus ~ .searchBtn,
+input-box .user-box input:valid ~ .searchBtn {
+    display: block;
+}
 /* Respondsive */
 /* Extra small devices (phones, 600px and down) */
 @media only screen and (max-width: 600px) {

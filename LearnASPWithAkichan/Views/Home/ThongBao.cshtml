@@ -5,30 +5,23 @@
 @section AddToHead{
     <link rel="stylesheet" href="~/css/index.css" type="text/css" />
 }
-    <div class="blackDiv"></div>
-    <aside id="leftside-menu" class="leftsideMenu">
-        <div class="logo">
-            <a  class="logoLink" asp-controller="Home" asp-action="Index" asp-area="">Chú bé DAN</a>
-        </div>
-        <div class="menuShadow">
-        </div>
-        <ul class="menu">
-            <li class="menu-item active ">
-                <a href="#" class="menu-link">
+@section AddItemToHeader{
+            <li class="menu-item active">
+                <a  class="menu-link" asp-controller="Home" asp-action="ThongBao" asp-area="">
                     <i class="menu-icon fa fa-info"></i>
                     <div>Thông báo</div>
                 </a>
             </li>
 
-            <li class="menu-item" >
-                <a class="menu-link" asp-controller="Home" asp-action="Index" asp-area="">
+            <li class="menu-item ">
+                <a  class="menu-link" asp-controller="Home" asp-action="Index" asp-area="">
                     <i class="menu-icon fa fa-pencil"></i>
                     <div>Đăng ký học phần</div>
                 </a>
             </li>
 
             <li class="menu-item">
-                <a href="#" class="menu-link">
+                <a class="menu-link" asp-controller="Home" asp-action="Login" asp-area="">
                     <i class="menu-icon fa fa-eye"></i>
                     <div>Học phần đã đăng ký</div>
                 </a>
@@ -40,9 +33,7 @@
                     <div>Thanh toán</div>
                 </a>
             </li>
-
-        </ul>
-    </aside>
+}
 
     <div class="container-fluid maincontentwrapper">
         <div class="row content">
@@ -101,19 +92,5 @@
         </div>
     </div>
 
-    <div class="infoModal">
-        <div class="modalTitle">
-            <p id="modal-title">THÔNG Đ*... THÔNG BÁO</p>
-        </div>
-
-        <div class="modalContent">
-           <div class="modalLogo">
-                <img src="~/css/images/man-with-laptop-light.png" alt="ThongBao" srcset="">
-           </div>
-
-           <div class="modalMainContent">
-                <span id="modal-content">Bạn đã đăng ký thành công!</span>
-           </div>
-        </div>
-    </div>
+  
     <script src="~/js/index.js"></script>

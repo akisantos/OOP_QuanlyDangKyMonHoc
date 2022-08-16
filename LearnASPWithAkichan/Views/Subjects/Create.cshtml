@@ -5,47 +5,85 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Create</h1>
 
-<h4>Subject</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Id" class="control-label"></label>
-                <input asp-for="Id" class="form-control" />
-                <span asp-validation-for="Id" class="text-danger"></span>
+@section AddToHead{
+    <link rel="stylesheet" href="~/css/login.css" type="text/css" />
+}
+
+<div class="container">
+        <div class="body d-md-flex h-100 d-flex align-items-center justify-content-center formBox" style="width:60vw; top:0 !important; margin-top: 0 !important;">
+            <div class="box-1 mt-md-0 mt-5">
+                <img src="https://images.unsplash.com/photo-1535083252457-6080fe29be45?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+                    class="" alt="">
             </div>
-            <div class="form-group">
-                <label asp-for="Credits" class="control-label"></label>
-                <input asp-for="Credits" class="form-control" />
-                <span asp-validation-for="Credits" class="text-danger"></span>
+            <div class=" box-2 d-flex flex-column h-100">
+                <div class="mt-5">
+                    <p class="mb-1 h-1">Thêm môn học</p>
+                    <p class="text-muted mb-2"></p>
+                    <div class="d-flex flex-column login-box ">
+                        <form asp-action="Create" id="CreateSubjectForm">
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div class="user-box">
+                                
+                                <input asp-for="Id"  />
+                                <label asp-for="Id"></label>
+                                @*<span asp-validation-for="Id" class="text-danger"></span>*@
+                            </div>
+                            <div class="user-box">
+
+                                <input asp-for="Credits"  />
+                                <label asp-for="Credits" ></label>
+                                @*<span asp-validation-for="Credits" class="text-danger"></span>*@
+                            </div>
+                            <div class="user-box">
+                                <input asp-for="Name" />
+                                <label asp-for="Name"></label>
+                                @*<span asp-validation-for="Name" class="text-danger"></span>*@
+                            </div>
+                            <div class="user-box" style="margin-top:2rem !important;">
+
+                                <select asp-for="SubjectId" asp-items="ViewBag.SubjectId"></select>
+                                <label asp-for="SubjectId" style="margin:0; padding:0; top:-2rem !important"></label>
+                            </div>
+                            <div class="user-box" style="margin-top:2rem;">
+                                <select asp-for="DepartmentId" asp-items="ViewBag.DepartmentId"></select>
+                                <label asp-for="DepartmentId" style="margin:0; padding:0; top:-2rem !important"></label>
+                            </div>
+
+                            <a type="Submit" id="Submit" onclick="document.getElementById('CreateSubjectForm').submit();">
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              Tạo
+                            </a>
+
+                            <a asp-action="Index">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                Quay lại
+                              </a>
+
+                            <div class="user-box">
+                                <!-- <p>Thông báo gì đó</p> -->
+                            </div>
+                          </form>
+                    </div>
+                </div>
+                <div class="mt-auto">
+                    <p class="footer text-muted mb-0 mt-md-0 mt-4">Nếu bạn quên mật khẩu hoặc cần hỗ trợ về tài khoản, hãy liên hệ
+                        <span class="p-color me-1">Phòng CNTT</span>hoặc gọi số
+                        <span class="p-color ms-1">0123345697</span>
+                    </p>
+                </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="SubjectId" class="control-label"></label>
-                <select asp-for="SubjectId" class ="form-control" asp-items="ViewBag.SubjectId"></select>
-            </div>
-            <div class="form-group">
-                <label asp-for="DepartmentId" class="control-label"></label>
-                <select asp-for="DepartmentId" class ="form-control" asp-items="ViewBag.DepartmentId"></select>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        
+        </div>
     </div>
-</div>
 
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
