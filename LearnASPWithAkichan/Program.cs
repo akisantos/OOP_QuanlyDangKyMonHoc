@@ -1,15 +1,30 @@
-using LearnASPWithAkichan.Models;
+﻿using LearnASPWithAkichan.Models;
 using Microsoft.EntityFrameworkCore;
+using System.Configuration;
+using System.Text.Encodings.Web;
+using System.Text.Unicode;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-builder.Services.AddRazorPages();
+// Cấu hình dịch vụ RazorRuntimeCompilation.
+builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
-builder.Services.AddDbContext<registrion_course2Context>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-
+// Cấu hình kết nối cơ sở dữ liệu.
+//var ConnectionStr = Configuration.GetConnectionString("dbStr");
+builder.Services.AddDbContext<registrion_course2Context>(options => options.UseSqlServer(builder.Configuration.GetSection("ConnectionStrings:DbContext").Value));
+builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All }));
+// Cấu hình cơ chế xác thực Cookie. Có thể đặt tên co Cookie("tên ở đây nè"); tên mặc định sẽ là cookies
+builder.Services.AddAuthentication("CookieAuth").AddCookie
+    ("CookieAuth",
+        options =>
+        {
+            options.Cookie.Name = "CookieAuth";
+            options.LogoutPath = "/Login/SignIn";
+            options.AccessDeniedPath = "/Login/AccessDenied";
+        }
+    );
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -24,11 +39,12 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
-
+// Xác thực
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}");
+    pattern: "{controller=Accounts}/{action=Login}/{id?}");
 
 app.Run();
