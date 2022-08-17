@@ -12,8 +12,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
 // Cấu hình kết nối cơ sở dữ liệu.
-//var ConnectionStr = Configuration.GetConnectionString("dbStr");
 builder.Services.AddDbContext<registrion_course2Context>(options => options.UseSqlServer(builder.Configuration.GetSection("ConnectionStrings:DbContext").Value));
+//CẤu hình Unicode
 builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All }));
 // Cấu hình cơ chế xác thực Cookie. Có thể đặt tên co Cookie("tên ở đây nè"); tên mặc định sẽ là cookies
 builder.Services.AddAuthentication("CookieAuth").AddCookie
@@ -25,7 +25,12 @@ builder.Services.AddAuthentication("CookieAuth").AddCookie
             options.AccessDeniedPath = "/Login/AccessDenied";
         }
     );
+
+builder.Services.AddSession();
+
 var app = builder.Build();
+
+app.UseSession();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

@@ -54,7 +54,7 @@
                         <li class="nav-item">
                             <a class="nav-link profile" href="javascript:void(0)">
                                 <div class="profile-info">
-                                    <span id="profile-name">Thông tin SV - Mã SV</span>
+                                    <span id="profile-name">@ViewBag.username</span>
                                 </div>
 
                                 <div class="avatar">
@@ -63,7 +63,7 @@
                             </a>
 
                             <div class="dropdownMenu">
-                                <a class="dropdownItem" asp-controller="Home" asp-action="Login" asp-area=""> <i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a>
+                                <a class="dropdownItem" asp-controller="Accounts" asp-action="Login" asp-area=""> <i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a>
                             </div>
                         </li>
                     </ul>

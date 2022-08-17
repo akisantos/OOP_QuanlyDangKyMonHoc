@@ -27,6 +27,7 @@ namespace LearnASPWithAkichan.Controllers
 
         public async Task<IActionResult> DangKy()
         {
+            ViewBag.username = HttpContext.Session.GetString("username");
             var registrion_course2Context = _context.Subjects.Include(s => s.Department).Include(s => s.SubjectNavigation);
             return View(await registrion_course2Context.ToListAsync());
         }

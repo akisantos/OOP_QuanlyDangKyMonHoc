@@ -16,15 +16,11 @@ namespace LearnASPWithAkichan.Controllers
             _logger = logger;
         }
 
-    public IActionResult Index()
+        public IActionResult Index()
         {
-            return Redirect("Subjects/DangKy");
+            return RedirectToAction("DangKy","Subjects");
         }
 
-        public IActionResult Login()
-        {
-            return View();
-        }
 
         public IActionResult ThongBao()
         {
