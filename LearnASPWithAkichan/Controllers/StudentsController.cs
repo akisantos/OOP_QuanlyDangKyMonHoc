@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LearnASPWithAkichan.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LearnASPWithAkichan.Controllers
 {
@@ -18,6 +19,7 @@ namespace LearnASPWithAkichan.Controllers
             _context = context;
         }
 
+        [Authorize(Policy = "Admin")]
         // GET: Students
         public async Task<IActionResult> Index()
         {
@@ -25,6 +27,7 @@ namespace LearnASPWithAkichan.Controllers
             return View(await registrion_course2Context.ToListAsync());
         }
 
+        [Authorize(Policy = "Admin")]
         // GET: Students/Details/5
         public async Task<IActionResult> Details(string id)
         {
@@ -44,6 +47,7 @@ namespace LearnASPWithAkichan.Controllers
             return View(student);
         }
 
+        [Authorize(Policy = "Admin")]
         // GET: Students/Create
         public IActionResult Create()
         {
@@ -56,6 +60,8 @@ namespace LearnASPWithAkichan.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,Fullname,Gender,Birth,Address,Phone,DepartmentId")] Student student)
         {
             if (ModelState.IsValid)
@@ -68,6 +74,7 @@ namespace LearnASPWithAkichan.Controllers
             return View(student);
         }
 
+        [Authorize(Policy = "Admin")]
         // GET: Students/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
@@ -90,6 +97,8 @@ namespace LearnASPWithAkichan.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Edit(string id, [Bind("Id,Fullname,Gender,Birth,Address,Phone,DepartmentId")] Student student)
         {
             if (id != student.Id)
@@ -122,6 +131,8 @@ namespace LearnASPWithAkichan.Controllers
         }
 
         // GET: Students/Delete/5
+
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null || _context.Students == null)
@@ -141,6 +152,7 @@ namespace LearnASPWithAkichan.Controllers
         }
 
         // POST: Students/Delete/5
+        [Authorize(Policy = "Admin")]
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)

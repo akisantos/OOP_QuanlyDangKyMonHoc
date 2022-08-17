@@ -1,4 +1,5 @@
 ﻿using LearnASPWithAkichan.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -20,13 +21,17 @@ namespace LearnASPWithAkichan.Controllers
         {
             return RedirectToAction("DangKy","Subjects");
         }
-
+        public IActionResult Login()
+        {
+            return View();  
+        }
 
         public IActionResult ThongBao()
         {
             return View();
         }
 
+        [Authorize(Policy = "Admin")]
         public IActionResult QuanLyKyDangKy()
         {
             string fullPath = folder + fileName;
@@ -45,12 +50,15 @@ namespace LearnASPWithAkichan.Controllers
             return View();
         }
 
+        [Authorize(Policy = "Admin")]
         public IActionResult TaoKyDangKy()
         {
             return View();
         }
 
         [HttpPost]
+
+        [Authorize(Policy = "Admin")]
         public IActionResult Admin_TaoKyDangKy(DateTime thoiGianBatDau, DateTime thoiGianKetThuc)
         {
             string s = thoiGianBatDau + "-" + thoiGianKetThuc;

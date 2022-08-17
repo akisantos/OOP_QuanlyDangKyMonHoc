@@ -6,9 +6,11 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LearnASPWithAkichan.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LearnASPWithAkichan.Controllers
 {
+    
     public class SubjectsController : Controller
     {
         private readonly registrion_course2Context _context;
@@ -17,14 +19,15 @@ namespace LearnASPWithAkichan.Controllers
         {
             _context = db;
         }
-
         // GET: Subjects
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Index()
         {
             var registrion_course2Context = _context.Subjects.Include(s => s.Department).Include(s => s.SubjectNavigation);
             return View(await registrion_course2Context.ToListAsync());
         }
 
+        [Authorize(Policy = "Student")]
         public async Task<IActionResult> DangKy()
         {
             ViewBag.username = HttpContext.Session.GetString("username");
@@ -33,6 +36,8 @@ namespace LearnASPWithAkichan.Controllers
         }
 
         // GET: Subjects/Details/5
+
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Details(string id)
         {
             if (id == null || _context.Subjects == null)
@@ -53,6 +58,7 @@ namespace LearnASPWithAkichan.Controllers
         }
 
         // GET: Subjects/Create
+        [Authorize(Policy = "Admin")]
         public IActionResult Create()
         {
             ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Id");
@@ -65,6 +71,7 @@ namespace LearnASPWithAkichan.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Create([Bind("Id,Credits,Name,SubjectId,DepartmentId")] Subject subject)
         {
             if (ModelState.IsValid)
@@ -79,6 +86,7 @@ namespace LearnASPWithAkichan.Controllers
         }
 
         // GET: Subjects/Edit/5
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Edit(string id)
         {
             if (id == null || _context.Subjects == null)
@@ -101,6 +109,7 @@ namespace LearnASPWithAkichan.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Edit(string id, [Bind("Id,Credits,Name,SubjectId,DepartmentId")] Subject subject)
         {
             if (id != subject.Id)
@@ -134,6 +143,7 @@ namespace LearnASPWithAkichan.Controllers
         }
 
         // GET: Subjects/Delete/5
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Delete(string id)
         {
             if (id == null || _context.Subjects == null)
@@ -156,6 +166,7 @@ namespace LearnASPWithAkichan.Controllers
         // POST: Subjects/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
             if (_context.Subjects == null)

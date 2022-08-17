@@ -1,5 +1,8 @@
 ﻿using LearnASPWithAkichan.Models;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using System.Configuration;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
@@ -10,27 +13,67 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 // Cấu hình dịch vụ RazorRuntimeCompilation.
 builder.Services.AddControllersWithViews().AddRazorRuntimeCompilation();
+//
 
 // Cấu hình kết nối cơ sở dữ liệu.
 builder.Services.AddDbContext<registrion_course2Context>(options => options.UseSqlServer(builder.Configuration.GetSection("ConnectionStrings:DbContext").Value));
 //CẤu hình Unicode
 builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All }));
-// Cấu hình cơ chế xác thực Cookie. Có thể đặt tên co Cookie("tên ở đây nè"); tên mặc định sẽ là cookies
+// Cấu hình cơ chế xác thực Cookie
+/*void ConfigureServices(IServiceCollection services)
+{
+    builder.Services.AddRazorPages();
+
+    builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+}*/
 builder.Services.AddAuthentication("CookieAuth").AddCookie
     ("CookieAuth",
         options =>
         {
             options.Cookie.Name = "CookieAuth";
-            options.LogoutPath = "/Login/SignIn";
-            options.AccessDeniedPath = "/Login/AccessDenied";
+            options.LogoutPath = "/Accounts/Login";
+            options.AccessDeniedPath = "/Accounts/Logout";
         }
     );
+//timeout
+builder.Services.AddDistributedMemoryCache();
+
+builder.Services.AddSession(options =>
+{
+    options.IdleTimeout = TimeSpan.FromSeconds(10);
+    options.Cookie.HttpOnly = true;
+    options.Cookie.IsEssential = true;
+});
+
+//Xác thực Admin-Student
+/*builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin", policy => policy.RequireClaim("1"));
+    options.AddPolicy("Student", policy => policy.RequireClaim("0"));
+});*/
+//Xac thuc
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin",
+        policy =>
+        {
+            policy.RequireAuthenticatedUser();
+            policy.RequireClaim("Admin");
+        });
+    options.AddPolicy("Student",
+      policy =>
+      {
+          policy.RequireAuthenticatedUser();
+          policy.RequireClaim("Student");
+      });
+
+});
 
 builder.Services.AddSession();
 
 var app = builder.Build();
 
-app.UseSession();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -39,6 +82,8 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+//session
+app.UseSession();
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
@@ -46,6 +91,7 @@ app.UseStaticFiles();
 app.UseRouting();
 // Xác thực
 app.UseAuthentication();
+
 app.UseAuthorization();
 
 app.MapControllerRoute(

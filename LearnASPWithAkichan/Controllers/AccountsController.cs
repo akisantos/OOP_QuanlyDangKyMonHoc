@@ -6,6 +6,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LearnASPWithAkichan.Models;
+using System.Security.Claims;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LearnASPWithAkichan.Controllers
 {
@@ -21,22 +25,48 @@ namespace LearnASPWithAkichan.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DangNhap(Account a)
         {
-            ViewBag.ThongBao = "Sai tk ";
-            var acc = await _context.Accounts.FirstOrDefaultAsync(
-                x => x.Username == a.Username && x.Password == a.Password);
-            if (acc != null)
+            if (ModelState.IsValid)
             {
-                HttpContext.Session.SetString("username",acc.Username);
-                return RedirectToAction("Index", "Home");
+                ViewBag.ThongBao = "Sai tk ";
+                var acc = await _context.Accounts.FirstOrDefaultAsync(
+                    x => x.Username == a.Username && x.Password == a.Password);
+                if (acc != null)
+                {
+                    var claims = new List<Claim>();
+                    if(acc.Role == 1)
+                    {
+                        claims.Add(new Claim(ClaimTypes.Name, "Admin"));
+                        claims.Add(new Claim("Admin", "true"));
+                    }
+                    else
+                    {
+                        claims.Add(new Claim(ClaimTypes.Name, "Student"));
+                        claims.Add(new Claim("Student", "true"));
+                    }
+                    var Identity = new ClaimsIdentity(claims, "CookieAuth");
+                    var Principal = new ClaimsPrincipal(Identity);
+                    await HttpContext.SignInAsync("CookieAuth", Principal);
+                    HttpContext.Session.SetString("username", acc.Username);
+                    return RedirectToAction("Index", "Home");
+                }
+                else return View("Login");
             }
-            else return View("Login");
+            return RedirectToAction("Index", "Home");
+
         }
         //login
         public IActionResult Login()
         {
             return View();
         }
+        //Logout
+        public IActionResult Logout()
+        {
+            return View();
+        }
+
         // GET: Accounts
+        [Authorize(Policy = "Admin")]
         public async Task<IActionResult> Index()
         {
             var registrion_course2Context = _context.Accounts.Include(a => a.Student);
