@@ -37,17 +37,18 @@ namespace LearnASPWithAkichan.Controllers
                     {
                         claims.Add(new Claim(ClaimTypes.Name, "Admin"));
                         claims.Add(new Claim("Admin", "true"));
+                        return RedirectToAction("Index", "Subjects");
                     }
                     else
                     {
                         claims.Add(new Claim(ClaimTypes.Name, "Student"));
                         claims.Add(new Claim("Student", "true"));
+                        return RedirectToAction("Index", "Home");
                     }
                     var Identity = new ClaimsIdentity(claims, "CookieAuth");
                     var Principal = new ClaimsPrincipal(Identity);
                     await HttpContext.SignInAsync("CookieAuth", Principal);
                     HttpContext.Session.SetString("username", acc.Username);
-                    return RedirectToAction("Index", "Home");
                 }
                 else return View("Login");
             }
