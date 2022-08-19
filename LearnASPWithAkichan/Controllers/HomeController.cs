@@ -16,16 +16,10 @@ namespace LearnASPWithAkichan.Controllers
             _db = db;
         }
 
-/*        public IActionResult Index()
+        public  IActionResult Index()
         {
+            //var subjectLst = _db._db.Subjects.ToList();
             return View();
-        }*/
-
-        public async Task<IActionResult> Index()
-        {
-            var regist_courseContext = _db.Students;
-            ViewBag.Test = "Aki chan";
-            return View(await regist_courseContext.ToListAsync());
         }
 
         public IActionResult Login()
@@ -39,6 +33,11 @@ namespace LearnASPWithAkichan.Controllers
         }
 
         public IActionResult ThongBao()
+        {
+            return View();
+        }
+
+        public IActionResult DSLopHocPhan()
         {
             return View();
         }
