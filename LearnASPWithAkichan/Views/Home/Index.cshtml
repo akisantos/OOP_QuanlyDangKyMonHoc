@@ -1,4 +1,6 @@
-﻿@{
+﻿@using LearnASPWithAkichan.Models
+@model IEnumerable<Student>
+@{
     ViewData["Title"] = "Đăng ký môn học";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -41,7 +43,7 @@
                 <div class="contentCard">
                     <div class="cardContent">
                       <div class="cardMainContent">
-                        <p>Mã: 0001122333</p>
+                        <p>@ViewBag.Test</p>
                         <h5>Lorem ipsum dolor sit.</h5>
                         <p>Số tín chỉ: 4</p>
                       </div>
@@ -57,6 +59,28 @@
                     </div>
                   </div>
                 </div>
+
+                @foreach (var item in Model)
+                {
+                   <div class="contentCard">
+                    <div class="cardContent">
+                      <div class="cardMainContent">
+                        <p>@item.AccountId</p>
+                        <h5>@item.Name</h5>
+                        <p>@item.Department</p>
+                      </div>
+                      <div class="cardSubContent">
+                        <p>@item.Address</p>
+                      </div>
+                    </div>
+                    <div class="cardImage">
+                      <div class="buttonAction">
+                        <a href="#" class="btn btn-outline dangKy" id="register-btn" value='+index+'> Đăng ký</a>
+                        <a href="#" class="btn btn-outline"> Đánh dấu</a>
+                      </div>
+                    </div>
+                  </div>
+                }
                 
             </div>
         </div>
