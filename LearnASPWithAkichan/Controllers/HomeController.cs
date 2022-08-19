@@ -20,6 +20,11 @@ namespace LearnASPWithAkichan.Controllers
 
         public IActionResult Login()
         {
+            return RedirectToAction("Index","Accounts");
+        }
+
+        public IActionResult HocPhanDaDangKy()
+        {
             return View();
         }
 

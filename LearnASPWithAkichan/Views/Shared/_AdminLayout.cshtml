@@ -29,40 +29,28 @@
         </div>
         <ul class="menu">
 
-            <li class="menu-item active">
-                <a href="#" class="menu-link">
+            <li class="menu-item">
+                <a asp-controller="Admin" asp-action="Index" class="menu-link">
                     <i class="menu-icon fa fa-pencil"></i>
                     <div>Quản lý kỳ đăng ký</div>
                 </a>
             </li>
 
             <li class="menu-item ">
-                <a href="#" class="menu-link">
+                <a asp-controller="Admin" asp-action="QuanLyMonHoc" class="menu-link">
                     <i class="menu-icon fa fa-book" aria-hidden="true"></i>
                     <div>Quản lý môn học</div>
                 </a>
             </li>
 
             <li class="menu-item ">
-                <a href="#" class="menu-link">
+                <a asp-controller="Admin" asp-action="QuanLyLopHocPhan" class="menu-link">
                     <i class="menu-icon fa fa-address-book" aria-hidden="true"></i>
-                    <div>Quản lý sinh viên</div>
+                    <div>Quản lý lớp học phần</div>
                 </a>
             </li>
 
-            <li class="menu-item ">
-                <a href="#" class="menu-link">
-                    <i class="menu-icon fa fa-users" aria-hidden="true"></i>
-                    <div>Quản lý khoa</div>
-                </a>
-            </li>
-
-            <li class="menu-item ">
-                <a href="#" class="menu-link">
-                    <i class="menu-icon fa fa-sign-out"></i>
-                    <div>Đăng xuất khỏi trái đất</div>
-                </a>
-            </li>
+  
 
         </ul>
     </aside>
@@ -93,7 +81,7 @@
                             </a>
 
                             <div class="dropdownMenu">
-                                <a href="./login.html" class="dropdownItem"> <i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a>
+                                <a asp-controller="Accounts" asp-action="Index" class="dropdownItem"> <i class="fa fa-sign-out" aria-hidden="true"></i> Đăng xuất</a>
                             </div>
                         </li>
                     </ul>
@@ -108,7 +96,7 @@
         </div>
     </div>
 
-
+    
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

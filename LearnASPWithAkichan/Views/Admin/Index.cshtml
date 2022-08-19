@@ -1,23 +1,22 @@
-﻿@{
-    ViewData["Title"] = "Đăng ký môn học";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿
+@{
+    ViewData["Title"] = "Quản lý kỳ đăng ký";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
 @section AddToHead{
     <link rel="stylesheet" href="~/css/index.css" type="text/css" />
 }
 
-            <div class="filter">
+<div class="filter">
                 <ul>
                     <li class="btn btn-outline btnActive" id="theo-ke-hoach-btn">Theo kế hoạch</li>
                     <li class="btn btn-outline" id="ngoai-ke-hoach-btn">Ngoài kế hoạch</li>
                 </ul>
             </div>
-            
+
             <!-- Ghi Xuất dữ liệu ở đây-->
             <div class="contentWrapper">
-
-                <div class="contentCard longCard">
+                              <div class="contentCard longCard">
                     <div class="cardContent">
                        <div class="cardMainContent">
                             <h2>@ViewData["Title"]</h2>
@@ -41,22 +40,23 @@
                 <div class="contentCard">
                     <div class="cardContent">
                       <div class="cardMainContent">
-                        <p>Mã: 0001122333</p>
-                        <h5>Lorem ipsum dolor sit.</h5>
-                        <p>Số tín chỉ: 4</p>
+                        <p>Kỳ đăng ký : i</p>
+                        <h5>Thời gian ở đây</h5>
+                        <p></p>
                       </div>
                       <div class="cardSubContent">
-                        <p>Môn tiên quyết: Lập trình cơ bản, Cấu trúc dữ liệu và giải thuật 1, Kinh tế chính trị</p>
+                        <p>Chú ý gì đó</p>
                       </div>
                     </div>
                     <div class="cardImage">
                       <div class="buttonAction">
-                        <a href="#" class="btn btn-outline dangKy" id="register-btn" value='+index+'> Đăng ký</a>
-                        <a href="#" class="btn btn-outline"> Đánh dấu</a>
+                        <a href="#" class="btn btn-outline dangKy" id="register-btn"> Chỉnh sửa</a>
+                       @* <a href="#" class="btn btn-outline"> Đánh dấu</a>*@
                       </div>
                     </div>
                   </div>
                 </div>
+  
                 
             </div>
         </div>
@@ -64,5 +64,5 @@
     <script>
         $(".menu li:nth-child(1)").addClass("active");
     </script>
-
     <script src="~/js/index.js"></script>
+

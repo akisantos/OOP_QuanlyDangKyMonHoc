@@ -1,22 +1,21 @@
-﻿@{
-    ViewData["Title"] = "Đăng ký môn học";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+﻿
+@{
+    ViewData["Title"] = "Quản lý lớp học phần";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
 @section AddToHead{
     <link rel="stylesheet" href="~/css/index.css" type="text/css" />
 }
 
-            <div class="filter">
+<div class="filter">
                 <ul>
                     <li class="btn btn-outline btnActive" id="theo-ke-hoach-btn">Theo kế hoạch</li>
                     <li class="btn btn-outline" id="ngoai-ke-hoach-btn">Ngoài kế hoạch</li>
                 </ul>
             </div>
-            
+
             <!-- Ghi Xuất dữ liệu ở đây-->
             <div class="contentWrapper">
-
                 <div class="contentCard longCard">
                     <div class="cardContent">
                        <div class="cardMainContent">
@@ -57,12 +56,13 @@
                     </div>
                   </div>
                 </div>
+  
                 
             </div>
         </div>
     </div>
-    <script>
-        $(".menu li:nth-child(1)").addClass("active");
-    </script>
-
     <script src="~/js/index.js"></script>
+
+    <script>
+        $(".menu li:nth-child(3)").addClass("active");
+    </script>
