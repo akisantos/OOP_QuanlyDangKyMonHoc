@@ -1,22 +1,23 @@
-﻿
-@{
-    ViewData["Title"] = "Quản lý kỳ đăng ký";
-    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+﻿@{
+    ViewData["Title"] = "Danh sách lớp";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 @section AddToHead{
     <link rel="stylesheet" href="~/css/index.css" type="text/css" />
 }
 
-<div class="filter">
+            <div class="filter">
                 <ul>
-@*                    <li class="btn btn-outline btnActive" id="theo-ke-hoach-btn">Tạo môn học</li>
-                    <li class="btn btn-outline" id="ngoai-ke-hoach-btn">Ngoài kế hoạch</li>*@
+                    <li class="btn btn-outline btnActive" id="theo-ke-hoach-btn">Theo kế hoạch</li>
+                    <li class="btn btn-outline" id="ngoai-ke-hoach-btn">Ngoài kế hoạch</li>
                 </ul>
             </div>
-
+            
             <!-- Ghi Xuất dữ liệu ở đây-->
             <div class="contentWrapper">
-                              <div class="contentCard longCard">
+
+                <div class="contentCard longCard">
                     <div class="cardContent">
                        <div class="cardMainContent">
                             <h2>@ViewData["Title"]</h2>
@@ -34,35 +35,34 @@
                         <img src="~/css/images/man-with-laptop-light.png" alt="ThongBao" srcset="">
                     </div>
 
-                </div>      
-                
+                </div>     
 
                 <div class="contentCard">
                     <div class="cardContent">
                       <div class="cardMainContent">
-                        <p>Kỳ đăng ký : i</p>
-                        <h5>Thời gian ở đây</h5>
-                        <p></p>
+                        <p>@ViewBag.Test</p>
+                        <h5>@ViewData["Title"]</h5>
+                        <p>Số tín chỉ: 4</p>
                       </div>
                       <div class="cardSubContent">
-                        <p>Chú ý gì đó</p>
+                        <p>Môn tiên quyết: Lập trình cơ bản, Cấu trúc dữ liệu và giải thuật 1, Kinh tế chính trị</p>
                       </div>
                     </div>
                     <div class="cardImage">
                       <div class="buttonAction">
-                        <a href="#" class="btn btn-outline dangKy" id="register-btn"> Chỉnh sửa</a>
-                       @* <a href="#" class="btn btn-outline"> Đánh dấu</a>*@
+                        <a class="btn btn-outline dangKy"> Đăng ký</a>
                       </div>
                     </div>
                   </div>
                 </div>
-  
-                
             </div>
         </div>
     </div>
-    <script>
-        $(".menu li:nth-child(1)").addClass("active");
-    </script>
-    <script src="~/js/index.js"></script>
 
+
+ 
+    <script>
+        $(".menu li:nth-child(0)").addClass("active");
+    </script>
+
+    <script src="~/js/index.js"></script>

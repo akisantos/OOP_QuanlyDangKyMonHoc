@@ -45,6 +45,13 @@
                                 <input asp-for="Amount" class="form-control" required type="number" max="40" min="1"/>
                                 <span asp-validation-for="Amount" class="text-danger"></span>
                             </div>
+
+                            <div class="user-box" style="display:none">
+                                <label asp-for="Active" class="control-label"></label>
+                                <br /> <br />
+                                <input asp-for="Active" class="form-control" value="true"/>
+                                <span asp-validation-for="Active" class="text-danger"></span>
+                            </div>
 @*                            <div class="user-box">
                                 <label asp-for="PointClass" class="control-label"></label>
                                 <br /> <br />
@@ -68,14 +75,14 @@
                              <div class="user-box">
                                 <label asp-for="BeginDate" class="control-label"></label>
                                 <br /> <br />
-                                <input asp-for="BeginDate" class="form-control" required />
+                                <input asp-for="BeginDate" class="form-control" required type="date" />
                                 <span asp-validation-for="BeginDate" class="text-danger"></span>
                             </div>
 
                             <div class="user-box">
                                 <label asp-for="EndDate" class="control-label"></label>
                                 <br /> <br />
-                                <input asp-for="EndDate" class="form-control" required/>
+                                <input asp-for="EndDate" class="form-control" required type="date"/>
                                 <span asp-validation-for="EndDate" class="text-danger"></span>
                             </div>
 

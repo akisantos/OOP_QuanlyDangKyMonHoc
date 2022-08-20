@@ -18,10 +18,10 @@ namespace LearnASPWithAkichan.Controllers
             _db = db;
         }
 
-        public  IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            //var subjectLst = _db._db.Subjects.ToList();
-            return View();
+            var regist_courseContext = _db.Subjects.Include(s => s.Department);
+            return View(await regist_courseContext.ToListAsync());
         }
 
         public IActionResult Login()
@@ -32,6 +32,12 @@ namespace LearnASPWithAkichan.Controllers
         public IActionResult HocPhanDaDangKy()
         {
             return View();
+        }
+
+        public async Task<IActionResult> DanhSachLop()
+        {
+            var regist_courseContext = _db.ClassSessions.Include(s => s.Department);
+            return View("DSLopHocPhan", await regist_courseContext.ToListAsync());
         }
 
         public IActionResult ThongBao()

@@ -20,8 +20,7 @@ namespace LearnASPWithAkichan.Controllers
         [Route("/Admin")]
         public IActionResult QuanLyKyDK()
         {
-
-            return View("Index");
+            return View();
         }
 
         //Quản lý môn học
@@ -72,14 +71,9 @@ namespace LearnASPWithAkichan.Controllers
         // Tạo lớp học phần.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> create_class_session([Bind("Id,Amount,BeginDate,EndDate,CommonClass,DepartmentId,SubjectId")] ClassSession classSession)
+        public async Task<IActionResult> create_class_session([Bind("Id,Amount,PointClass,PointMid,PointEnd,Active,BeginDate,EndDate,CommonClass,DepartmentId,SubjectId")] ClassSession classSession)
         {
-
-            if (!ModelState.IsValid)
-            {
-                TempData["notification"] = "Xảy ra sự cố !";
-                return View(nameof(TaoLopLopHocPhan));
-            }
+            var subject = _context.Subjects.FirstOrDefault(x =>x.Id == classSession.SubjectId);
             ClassSession class_sesion = new ClassSession()
             {
                 Id = classSession.Id,
@@ -90,9 +84,10 @@ namespace LearnASPWithAkichan.Controllers
                 SubjectId = classSession.SubjectId,
                 BeginDate = classSession.BeginDate,
                 EndDate = classSession.EndDate,
-                PointClass = 0,
+                PointClass = 0, 
                 PointMid = 0,
-                PointEnd = 0
+                PointEnd = 0,
+                Subject = subject
             };
             _context.ClassSessions.Add(class_sesion);
             await _context.SaveChangesAsync();
