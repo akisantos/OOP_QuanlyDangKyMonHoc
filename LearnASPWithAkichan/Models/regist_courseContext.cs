@@ -27,7 +27,7 @@ namespace LearnASPWithAkichan.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=regist_course;Integrated Security=True;");
+                optionsBuilder.UseSqlServer("Data Source=TUAN\\TUAN;Initial Catalog=dkhoc_phan;Integrated Security=True;");
             }
         }
 

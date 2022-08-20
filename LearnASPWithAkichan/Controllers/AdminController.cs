@@ -100,6 +100,7 @@ namespace LearnASPWithAkichan.Controllers
 
         }
 
+
         public IActionResult ChinhSuaLopHocPhan(string id)
         {
             var class_sesion = _context.ClassSessions.FirstOrDefault(c => c.Id == id);

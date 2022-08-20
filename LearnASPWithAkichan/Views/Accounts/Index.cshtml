@@ -1,4 +1,6 @@
-﻿@{
+﻿@model LearnASPWithAkichan.Models.Account
+
+@{
     ViewData["Title"] = "Đăng nhập";
     Layout = "";
 }
@@ -29,25 +31,27 @@
                     <p class="mb-1 h-1">Đăng nhập</p>
                     <p class="text-muted mb-2">Dùng tài khoản sinh viên của bạn để đăng nhập.</p>
                     <div class="d-flex flex-column login-box ">
-                        <form>
+                        <form asp-controller="Accounts" asp-action="login" method="post" id="loginForm">
                             <div class="user-box">
-                              <input type="text" name="" required="">
+                              <input type="text" asp-for="UserName" required="">
                               <label>Mã sinh viên</label>
                             </div>
                             <div class="user-box">
-                              <input type="password" name="" required="">
+                              <input type="password" asp-for="PassWord" required="">
                               <label>Mật khẩu</label>
                             </div>
-                            <a  id="Submit" asp-controller="Home" asp-action="Index">
+                            @*<a id="Submit" href="javascripts:$('#loginForm').submit()">
                               <span></span>
                               <span></span>
                               <span></span>
                               <span></span>
                               Đăng nhập
-                            </a>
+                            </a>*@
+                            <button type="submit" class="btn btn-primary">Đăng nhập</button>
 
                             <div class="user-box">
                                 <!-- <p>Thông báo gì đó</p> -->
+                                <span class="text-danger">@TempData["notification"]</span>
                             </div>
                           </form>
                     </div>
