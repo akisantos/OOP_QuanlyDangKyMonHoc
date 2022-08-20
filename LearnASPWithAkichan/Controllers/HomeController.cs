@@ -1,10 +1,12 @@
 ﻿using LearnASPWithAkichan.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
 
 namespace LearnASPWithAkichan.Controllers
 {
+       // [Authorize(Policy = "Student")]
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
@@ -15,8 +17,7 @@ namespace LearnASPWithAkichan.Controllers
             _logger = logger;
             _db = db;
         }
-
-        public  IActionResult Index()
+        public IActionResult Index()
         {
             //var subjectLst = _db._db.Subjects.ToList();
             return View();

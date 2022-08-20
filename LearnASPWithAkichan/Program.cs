@@ -13,6 +13,35 @@ builder.Services.AddDbContext<regist_courseContext>(options => options.UseSqlSer
 ));
 //CẤu hình Unicode
 builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All }));
+//Cookies
+builder.Services.AddAuthentication("CookieAuth").AddCookie
+    ("CookieAuth",
+        options =>
+        {
+            options.Cookie.Name = "CookieAuth";
+            options.LogoutPath = "/Accounts/Index";
+            options.AccessDeniedPath = "/Home/Error";
+        }
+    );
+//Authorize
+builder.Services.AddAuthorization(options =>
+{
+    options.AddPolicy("Admin",
+        policy =>
+        {
+            policy.RequireAuthenticatedUser();
+            policy.RequireClaim("Admin");
+        });
+    options.AddPolicy("Student",
+      policy =>
+      {
+          policy.RequireAuthenticatedUser();
+          policy.RequireClaim("Student");
+      });
+
+});
+//Session
+builder.Services.AddSession();
 
 builder.Services.AddSession();
 
@@ -32,6 +61,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseAuthentication();
 app.UseAuthorization();
 
 app.MapControllerRoute(

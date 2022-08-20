@@ -6,11 +6,14 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LearnASPWithAkichan.Models;
+using Microsoft.AspNetCore.Authorization;
 
 namespace LearnASPWithAkichan.Controllers
 {
+    //[Authorize(Policy = "Admin")]
     public class AdminController : Controller
     {
+        
         private readonly regist_courseContext _context;
         public AdminController(regist_courseContext context)
         {
