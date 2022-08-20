@@ -1,13 +1,40 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
+using LearnASPWithAkichan.Models;
 
 namespace LearnASPWithAkichan.Controllers
 {
     public class AdminController : Controller
     {
-        [Route("Admin")]
-        [Route("Admin/QuanLyKyDangKy")]
-        public IActionResult Index()
+        private readonly regist_courseContext _context;
+        public AdminController(regist_courseContext context)
         {
+            _context = context;
+        }
+
+        [Route("/Admin")]
+        public IActionResult QuanLyKyDK()
+        {
+
+            return View("Index");
+        }
+
+        //Quản lý môn học
+        public async Task<IActionResult> QuanLyMonHoc()
+        {
+            var regist_courseContext = _context.Subjects.Include(s => s.Department);
+
+            return View(await regist_courseContext.ToListAsync());
+        }
+
+        public IActionResult TaoMonHoc()
+        {
+            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Id");
             return View();
         }
 
@@ -47,7 +74,7 @@ namespace LearnASPWithAkichan.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> create_class_session([Bind("Id,Amount,BeginDate,EndDate,CommonClass,DepartmentId,SubjectId")] ClassSession classSession)
         {
-            
+
             if (!ModelState.IsValid)
             {
                 TempData["notification"] = "Xảy ra sự cố !";
