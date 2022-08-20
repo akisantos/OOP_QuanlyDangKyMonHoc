@@ -9,90 +9,94 @@ using LearnASPWithAkichan.Models;
 
 namespace LearnASPWithAkichan.Controllers
 {
-    public class SubjectsController : Controller
+    public class StudentsController : Controller
     {
         private readonly regist_courseContext _context;
 
-        public SubjectsController(regist_courseContext context)
+        public StudentsController(regist_courseContext context)
         {
             _context = context;
         }
 
-        // GET: Subjects
+        // GET: Students
         public async Task<IActionResult> Index()
         {
-            var regist_courseContext = _context.Subjects.Include(s => s.Department);
+            var regist_courseContext = _context.Students.Include(s => s.Account).Include(s => s.Department);
             return View(await regist_courseContext.ToListAsync());
         }
 
-        // GET: Subjects/Details/5
+        // GET: Students/Details/5
         public async Task<IActionResult> Details(string id)
         {
-            if (id == null || _context.Subjects == null)
+            if (id == null || _context.Students == null)
             {
                 return NotFound();
             }
 
-            var subject = await _context.Subjects
+            var student = await _context.Students
+                .Include(s => s.Account)
                 .Include(s => s.Department)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (subject == null)
+            if (student == null)
             {
                 return NotFound();
             }
 
-            return View(subject);
+            return View(student);
         }
 
-        // GET: Subjects/Create
+        // GET: Students/Create
         public IActionResult Create()
         {
+            ViewData["AccountId"] = new SelectList(_context.Accounts, "Id", "Id");
             ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Id");
             return View();
         }
 
-        // POST: Subjects/Create
+        // POST: Students/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Credits,DepartmentId")] Subject subject)
+        public async Task<IActionResult> Create([Bind("Id,Name,Birth,Address,HomeTown,DepartmentId,AccountId")] Student student)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(subject);
+                _context.Add(student);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Id", subject.DepartmentId);
-            return View(subject);
+            ViewData["AccountId"] = new SelectList(_context.Accounts, "Id", "Id", student.AccountId);
+            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Id", student.DepartmentId);
+            return View(student);
         }
 
-        // GET: Subjects/Edit/5
+        // GET: Students/Edit/5
         public async Task<IActionResult> Edit(string id)
         {
-            if (id == null || _context.Subjects == null)
+            if (id == null || _context.Students == null)
             {
                 return NotFound();
             }
 
-            var subject = await _context.Subjects.FindAsync(id);
-            if (subject == null)
+            var student = await _context.Students.FindAsync(id);
+            if (student == null)
             {
                 return NotFound();
             }
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Id", subject.DepartmentId);
-            return View(subject);
+            ViewData["AccountId"] = new SelectList(_context.Accounts, "Id", "Id", student.AccountId);
+            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Id", student.DepartmentId);
+            return View(student);
         }
 
-        // POST: Subjects/Edit/5
+        // POST: Students/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Credits,DepartmentId")] Subject subject)
+        public async Task<IActionResult> Edit(string id, [Bind("Id,Name,Birth,Address,HomeTown,DepartmentId,AccountId")] Student student)
         {
-            if (id != subject.Id)
+            if (id != student.Id)
             {
                 return NotFound();
             }
@@ -101,12 +105,12 @@ namespace LearnASPWithAkichan.Controllers
             {
                 try
                 {
-                    _context.Update(subject);
+                    _context.Update(student);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!SubjectExists(subject.Id))
+                    if (!StudentExists(student.Id))
                     {
                         return NotFound();
                     }
@@ -117,51 +121,53 @@ namespace LearnASPWithAkichan.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Id", subject.DepartmentId);
-            return View(subject);
+            ViewData["AccountId"] = new SelectList(_context.Accounts, "Id", "Id", student.AccountId);
+            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Id", student.DepartmentId);
+            return View(student);
         }
 
-        // GET: Subjects/Delete/5
+        // GET: Students/Delete/5
         public async Task<IActionResult> Delete(string id)
         {
-            if (id == null || _context.Subjects == null)
+            if (id == null || _context.Students == null)
             {
                 return NotFound();
             }
 
-            var subject = await _context.Subjects
+            var student = await _context.Students
+                .Include(s => s.Account)
                 .Include(s => s.Department)
                 .FirstOrDefaultAsync(m => m.Id == id);
-            if (subject == null)
+            if (student == null)
             {
                 return NotFound();
             }
 
-            return View(subject);
+            return View(student);
         }
 
-        // POST: Subjects/Delete/5
+        // POST: Students/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(string id)
         {
-            if (_context.Subjects == null)
+            if (_context.Students == null)
             {
-                return Problem("Entity set 'regist_courseContext.Subjects'  is null.");
+                return Problem("Entity set 'regist_courseContext.Students'  is null.");
             }
-            var subject = await _context.Subjects.FindAsync(id);
-            if (subject != null)
+            var student = await _context.Students.FindAsync(id);
+            if (student != null)
             {
-                _context.Subjects.Remove(subject);
+                _context.Students.Remove(student);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool SubjectExists(string id)
+        private bool StudentExists(string id)
         {
-          return (_context.Subjects?.Any(e => e.Id == id)).GetValueOrDefault();
+          return (_context.Students?.Any(e => e.Id == id)).GetValueOrDefault();
         }
     }
 }

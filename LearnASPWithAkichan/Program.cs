@@ -8,9 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
-builder.Services.AddDbContext<regist_courseContext>(options => options.UseSqlServer(
-    builder.Configuration.GetConnectionString("DefaultConnection")
-));
+builder.Services.AddDbContext<regist_courseContext>(options => options.UseSqlServer(builder.Configuration.GetSection("ConnectionStrings:DbContext").Value));
 //CẤu hình Unicode
 builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All }));
 //Cookies
@@ -43,11 +41,9 @@ builder.Services.AddAuthorization(options =>
 //Session
 builder.Services.AddSession();
 
-builder.Services.AddSession();
 
 var app = builder.Build();
 
-app.UseSession();
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {

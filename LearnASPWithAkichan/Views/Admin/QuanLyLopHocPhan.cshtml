@@ -1,4 +1,4 @@
-﻿@model IEnumerable<LearnASPWithAkichan.Models.ClassSession>
+﻿
 @{
     ViewData["Title"] = "Quản lý lớp học phần";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -9,7 +9,8 @@
 
 <div class="filter">
                 <ul>
-                    <li class="btn btn-outline"><i class="fa fa-plus" aria-hidden="true"></i> <a asp-action="TaoLopLopHocPhan"> Tạo lớp học phần</a></li>
+                    <li class="btn btn-outline btnActive" id="theo-ke-hoach-btn">Theo kế hoạch</li>
+                    <li class="btn btn-outline" id="ngoai-ke-hoach-btn">Ngoài kế hoạch</li>
                 </ul>
             </div>
 
@@ -34,28 +35,28 @@
                     </div>
 
                 </div>      
-                  
-                 @foreach (var item in Model)
-                    {
-                    <div class="contentCard">
-                        <div class="cardContent">
-                                <div class="cardMainContent">
-                                    <p>@Html.DisplayFor(modelItem => item.Id)</p>
-                                    <h5>@Html.DisplayFor(modelItem => item.CommonClass)</h5>
-                                    <p>@Html.DisplayFor(modelItem => item.Amount)</p>
-                                </div>
-                                <div class="cardSubContent">
-                                     <p>@Html.DisplayFor(modelItem => item.BeginDate) - @Html.DisplayFor(modelItem => item.EndDate)</p>
-                                </div>
-                        </div>
-                        <div class="cardImage">
-                          <div class="buttonAction">
-                            <a class="btn btn-outline dangKy" asp-route-id="@item.Id" asp-action="ChinhSuaLopHocPhan"> Chỉnh sửa</a>
-                          </div>
-                        </div>
-                  </div>
+                
 
-                }
+                <div class="contentCard">
+                    <div class="cardContent">
+                      <div class="cardMainContent">
+                        <p>Mã: 0001122333</p>
+                        <h5>Lorem ipsum dolor sit.</h5>
+                        <p>Số tín chỉ: 4</p>
+                      </div>
+                      <div class="cardSubContent">
+                        <p>Môn tiên quyết: Lập trình cơ bản, Cấu trúc dữ liệu và giải thuật 1, Kinh tế chính trị</p>
+                      </div>
+                    </div>
+                    <div class="cardImage">
+                      <div class="buttonAction">
+                        <a href="#" class="btn btn-outline dangKy" id="register-btn" value='+index+'> Đăng ký</a>
+                        <a href="#" class="btn btn-outline"> Đánh dấu</a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+  
                 
             </div>
         </div>

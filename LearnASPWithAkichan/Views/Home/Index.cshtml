@@ -1,5 +1,5 @@
 ﻿@using LearnASPWithAkichan.Models
-@model LearnASPWithAkichan.Models.Subject
+@model IEnumerable<LearnASPWithAkichan.Models.Subject>  
 @{
     ViewData["Title"] = "Đăng ký môn học";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -37,10 +37,8 @@
                         <img src="~/css/images/man-with-laptop-light.png" alt="ThongBao" srcset="">
                     </div>
 
-                </div>     
+                </div>      
                 
-
-
 
                 <div class="contentCard">
                     <div class="cardContent">
@@ -55,25 +53,30 @@
                     </div>
                     <div class="cardImage">
                       <div class="buttonAction">
-                        <a class="btn btn-outline dangKy"> Xem danh sách lớp</a>
+                        <a href="#" class="btn btn-outline dangKy" id="register-btn" value='+index+'> Đăng ký</a>
+                        <a href="#" class="btn btn-outline"> Đánh dấu</a>
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="contentCard">
+
+                @foreach (var item in Model)
+                {
+                    <div class="contentCard">
                     <div class="cardContent">
                       <div class="cardMainContent">
-                        <p>Id</p>
-                        <h5>Name</h5>
-                        <p>Credits tín chỉ</p>
+                        <p>@item.Id</p>
+                        <h5>@item.Name</h5>
+                        <p>@item.Credits tín chỉ</p>
                       </div>
                       <div class="cardSubContent">
-                        <p>ClassSessions - ClassSessions</p>
+                        <p>@item.ClassSessions - @item.ClassSessions</p>
                       </div>
                     </div>
                     <div class="cardImage">
                       <div class="buttonAction">
-                        <a class="btn btn-outline dangKy"> Xem danh sách lớp</a>
+                        <a href="#" class="btn btn-outline dangKy" id="register-btn" value='+index+'> Đăng ký</a>
+                        <a href="#" class="btn btn-outline"> Đánh dấu</a>
                       </div>
                     </div>
                   </div>
@@ -84,9 +87,6 @@
             </div>
         </div>
     </div>
-
-
- 
     <script>
         $(".menu li:nth-child(1)").addClass("active");
     </script>
