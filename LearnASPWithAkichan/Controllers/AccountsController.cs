@@ -10,8 +10,5 @@ namespace LearnASPWithAkichan.Controllers
         {
             return View();
         }
-
-
-
     }
 }

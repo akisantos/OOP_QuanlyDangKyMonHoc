@@ -1,5 +1,5 @@
 ﻿@using LearnASPWithAkichan.Models
-@model IEnumerable<LearnASPWithAkichan.Models.Subject>  
+@model IEnumerable<Student>
 @{
     ViewData["Title"] = "Đăng ký môn học";
     Layout = "~/Views/Shared/_Layout.cshtml";
@@ -62,15 +62,15 @@
 
                 @foreach (var item in Model)
                 {
-                    <div class="contentCard">
+                   <div class="contentCard">
                     <div class="cardContent">
                       <div class="cardMainContent">
-                        <p>@item.Id</p>
+                        <p>@item.AccountId</p>
                         <h5>@item.Name</h5>
-                        <p>@item.Credits tín chỉ</p>
+                        <p>@item.Department</p>
                       </div>
                       <div class="cardSubContent">
-                        <p>@item.ClassSessions - @item.ClassSessions</p>
+                        <p>@item.Address</p>
                       </div>
                     </div>
                     <div class="cardImage">

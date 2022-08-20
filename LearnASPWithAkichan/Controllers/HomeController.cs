@@ -18,11 +18,10 @@ namespace LearnASPWithAkichan.Controllers
             _db = db;
         }
 
-        public async Task<IActionResult> Index()
+        public  IActionResult Index()
         {
-            var regist_courseContext = _db.Students;
-            ViewBag.Test = "Aki chan";
-            return View(await regist_courseContext.ToListAsync());
+            //var subjectLst = _db._db.Subjects.ToList();
+            return View();
         }
 
         public IActionResult Login()
