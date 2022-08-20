@@ -5,7 +5,6 @@ using LearnASPWithAkichan.Models;
 
 namespace LearnASPWithAkichan.Controllers
 {
-    //[Authorize(Policy = "Admin")]
     public class AdminController : Controller
     {
         private readonly regist_courseContext _context;
