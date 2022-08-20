@@ -7,61 +7,57 @@
     <link rel="stylesheet" href="~/css/index.css" type="text/css" />
 }
 
-<div class="filter">
-                <ul>
-                    <li class="btn btn-outline"><i class="fa fa-plus" aria-hidden="true"></i> <a asp-action="TaoLopLopHocPhan"> Tạo lớp học phần</a></li>
-                </ul>
+    <div class="filter">
+        <ul>
+            <li class="btn btn-outline"><i class="fa fa-plus" aria-hidden="true"></i> <a asp-action="TaoLopLopHocPhan"> Tạo lớp học phần</a></li>
+        </ul>
+    </div>
+
+    <!-- Ghi Xuất dữ liệu ở đây-->
+    <div class="contentWrapper">
+        <div class="contentCard longCard">
+            <div class="cardContent">
+                <div class="cardMainContent">
+                    <h2>@ViewData["Title"]</h2>
+                    <br>
+                    <p>Nếu bạn không tìm thấy học phần nào nghĩa là chưa đến đợt đăng ký!</p>
+                </div>
+
+                <div class="cardSubContent">
+                </div>
             </div>
 
-            <!-- Ghi Xuất dữ liệu ở đây-->
-            <div class="contentWrapper">
-                <div class="contentCard longCard">
-                    <div class="cardContent">
-                       <div class="cardMainContent">
-                            <h2>@ViewData["Title"]</h2>
-                            <br>
-                            <p>Nếu bạn không tìm thấy học phần nào nghĩa là chưa đến đợt đăng ký!</p>
-                       </div>
+            <div class="cardImage">
+                <img src="~/css/images/man-with-laptop-light.png" alt="ThongBao" srcset="">
+            </div>
 
-                       <div class="cardSubContent">
-                            
+        </div>
 
-                       </div>
-                    </div>
-
-                    <div class="cardImage">
-                        <img src="~/css/images/man-with-laptop-light.png" alt="ThongBao" srcset="">
-                    </div>
-
-                </div>      
-                  
-                 @foreach (var item in Model)
-                    {
-                    <div class="contentCard">
-                        <div class="cardContent">
-                                <div class="cardMainContent">
-                                    <p>@Html.DisplayFor(modelItem => item.Id)</p>
-                                    <h5>@Html.DisplayFor(modelItem => item.CommonClass)</h5>
-                                    <p>@Html.DisplayFor(modelItem => item.Amount)</p>
-                                </div>
-                                <div class="cardSubContent">
-                                     <p>@Html.DisplayFor(modelItem => item.BeginDate) - @Html.DisplayFor(modelItem => item.EndDate)</p>
-                                </div>
-                        </div>
-                        <div class="cardImage">
-                          <div class="buttonAction">
-                            <a class="btn btn-outline dangKy" asp-route-id="@item.Id" asp-action="ChinhSuaLopHocPhan"> Chỉnh sửa</a>
-                          </div>
-                        </div>
-                  </div>
-
-                }
-                
+    @foreach (var item in Model)
+    {
+        <div class="contentCard">
+            <div class="cardContent">
+                <div class="cardMainContent">
+                    <p>@Html.DisplayFor(modelItem => item.Id)</p>
+                    <h5>@Html.DisplayFor(modelItem => item.CommonClass)</h5>
+                    <p>@Html.DisplayFor(modelItem => item.Amount)</p>
+                </div>
+                <div class="cardSubContent">
+                    <p>@Html.DisplayFor(modelItem => item.BeginDate) - @Html.DisplayFor(modelItem => item.EndDate)</p>
+                </div>
+            </div>
+            <div class="cardImage">
+                <div class="buttonAction">
+                    <a class="btn btn-outline dangKy" asp-route-id="@item.Id" asp-action="ChinhSuaLopHocPhan"> Chỉnh sửa</a>
+                </div>
             </div>
         </div>
+    }
+</div>
+        </div>
     </div>
-    <script src="~/js/index.js"></script>
+<script src="~/js/index.js"></script>
 
-    <script>
-        $(".menu li:nth-child(3)").addClass("active");
-    </script>
+<script>
+    $(".menu li:nth-child(3)").addClass("active");
+</script>

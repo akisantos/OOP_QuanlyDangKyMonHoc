@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using LearnASPWithAkichan.Models;
+using Microsoft.AspNetCore.Http;
 
 namespace LearnASPWithAkichan.Controllers
 {
@@ -94,6 +95,7 @@ namespace LearnASPWithAkichan.Controllers
             return View(nameof(QuanLyLopHocPhan));
 
         }
+
 
         public IActionResult ChinhSuaLopHocPhan(string id)
         {

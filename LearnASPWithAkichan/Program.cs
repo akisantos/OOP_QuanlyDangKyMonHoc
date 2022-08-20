@@ -1,9 +1,11 @@
 ﻿using LearnASPWithAkichan.Models;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using System.Text.Encodings.Web;
 using System.Text.Unicode;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
@@ -13,8 +15,10 @@ builder.Services.AddDbContext<regist_courseContext>(options => options.UseSqlSer
 ));
 //CẤu hình Unicode
 builder.Services.AddSingleton<HtmlEncoder>(HtmlEncoder.Create(allowedRanges: new[] { UnicodeRanges.All }));
-
+builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 builder.Services.AddSession();
+
+
 
 var app = builder.Build();
 

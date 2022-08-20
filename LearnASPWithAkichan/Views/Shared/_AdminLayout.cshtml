@@ -1,4 +1,11 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor Accessor
+
+@{
+    var username = @Accessor.HttpContext.Session.GetString("username");
+}
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -72,7 +79,7 @@
                         <li class="nav-item">
                             <a class="nav-link profile" href="javascript:void(0)">
                                 <div class="profile-info">
-                                    <span id="profile-name">Thông tin Admin</span>
+                                    <span id="profile-name">@username</span>
                                 </div>
 
                                 <div class="avatar">

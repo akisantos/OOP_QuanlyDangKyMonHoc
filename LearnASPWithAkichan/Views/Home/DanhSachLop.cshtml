@@ -1,4 +1,5 @@
-﻿@{
+﻿@model IEnumerable<LearnASPWithAkichan.Models.ClassSession>
+@{
     ViewData["Title"] = "Danh sách lớp";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -36,13 +37,13 @@
                     </div>
 
                 </div>     
-
-                <div class="contentCard">
+                @foreach(var item in Model){
+                    <div class="contentCard">
                     <div class="cardContent">
                       <div class="cardMainContent">
-                        <p>@ViewBag.Test</p>
-                        <h5>@ViewData["Title"]</h5>
-                        <p>Số tín chỉ: 4</p>
+                        <p>@item.BeginDate - @item.EndDate</p>
+                        <h5>@item.Id</h5>
+                        <p>@item.Amount</p>
                       </div>
                       <div class="cardSubContent">
                         <p>Môn tiên quyết: Lập trình cơ bản, Cấu trúc dữ liệu và giải thuật 1, Kinh tế chính trị</p>
@@ -54,6 +55,8 @@
                       </div>
                     </div>
                   </div>
+                }
+                
                 </div>
             </div>
         </div>

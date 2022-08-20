@@ -361,14 +361,15 @@ body {
     display: flex;
     flex-direction: flex-end;
     justify-content: center;
-    width: 30%;
+    width: auto;
+    min-width:30%;
     height: 100%;
     border-top-right-radius: 0.625rem;
     border-bottom-right-radius: 0.625rem;
 }
 
     .cardImage img {
-        width: 40%;
+        width: 50% ;
         object-fit: cover;
         border-top-right-radius: 0.625rem;
         border-bottom-right-radius: 0.625rem;
