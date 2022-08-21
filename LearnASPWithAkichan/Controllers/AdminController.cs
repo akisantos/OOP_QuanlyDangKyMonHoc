@@ -28,7 +28,6 @@ namespace LearnASPWithAkichan.Controllers
         public async Task<IActionResult> QuanLyMonHoc()
         {
             var regist_courseContext = _context.Subjects.Include(s => s.Department);
-
             return View(await regist_courseContext.ToListAsync());
         }
 

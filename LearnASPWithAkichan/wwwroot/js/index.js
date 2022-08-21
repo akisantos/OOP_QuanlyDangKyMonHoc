@@ -71,19 +71,13 @@ $("#toggle-leftside").click(() => {
 $("#theo-ke-hoach-btn").click(() => {
     $("#ngoai-ke-hoach-btn").removeClass("btnActive");
     $("#theo-ke-hoach-btn").addClass("btnActive");
-    $(".contentWrapper").empty();
-    for (let index = 0; index < 10; index++) {
-        $('<div class="contentCard"> <div class="cardContent"> <div class="cardMainContent"> <p>Mã: 0001122333</p> <h5>Trong kế hoạch</h5> <br> <p>Số tín chỉ: 4</p> <p>Môn tiên quyết: Lập trình cơ bản</p> </div> <div class="cardSubContent"> </div> </div> <div class="cardImage"> <div class="buttonAction"> <a href="#" class="btn btn-outline dangKy" id="register-btn" value=' + index + '> Đăng ký</a> <a href="#" class="btn btn-outline"> Đánh dấu</a> </div> </div> </div>').appendTo(".contentWrapper");
-    }
+
 })
 
 $("#ngoai-ke-hoach-btn").click(() => {
     $("#ngoai-ke-hoach-btn").addClass("btnActive");
     $("#theo-ke-hoach-btn").removeClass("btnActive");
-    $(".contentWrapper").empty();
-    for (let index = 0; index < 10; index++) {
-        $('<div class="contentCard"> <div class="cardContent"> <div class="cardMainContent"> <p>Mã: 0001122333</p> <h5>Ngoài kế hoạch</h5> <br> <p>Số tín chỉ: 4</p> <p>Môn tiên quyết: Lập trình cơ bản</p> </div> <div class="cardSubContent"> </div> </div> <div class="cardImage"> <div class="buttonAction"> <a href="#" class="btn btn-outline dangKy" id="register-btn" value=' + index + '> Đăng ký</a> <a href="#" class="btn btn-outline"> Đánh dấu</a> </div> </div> </div>').appendTo(".contentWrapper");
-    }
+
 })
 
 

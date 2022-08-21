@@ -32,26 +32,47 @@ namespace LearnASPWithAkichan.Controllers
             var k = _db.Departments.FirstOrDefault(x => x.Id == stu.DepartmentId);
             var sub = _db.Subjects.FirstOrDefault(x => x.DepartmentId == stu.DepartmentId);
             var listSub = from s in _db.Subjects where s.DepartmentId == k.Id select s;
-            return View(listSub.ToList());
+            return View(await listSub.ToListAsync());
         }
         /*******/
         // Dang ky lop hoc phan hoc phan
-        public IActionResult HocPhanDaDangKy()
+        public async Task<IActionResult> HocPhanDaDangKy()
         {
-            return View();
+            string username = HttpContext.Session.GetString("username");
+            var acc = _db.Accounts.FirstOrDefault(x => x.UserName == username);
+            var stuID = _db.Students.FirstOrDefault(x => x.AccountId == acc.Id);
+            var regTest = _db.RegistClasses.Where(t => t.StudentId == stuID.Id);
+            //var regclass = _db.RegistClasses.ToListAsync();
+            return View(await regTest.ToListAsync());
         }
-        
+        public IActionResult add(string id)
+        {
+            var clas = _db.ClassSessions.FirstOrDefault(x => x.Id == id);
+            var sub = _db.Subjects.FirstOrDefault(x => x.Id == clas.SubjectId);
+            var dep = _db.Departments.FirstOrDefault(x => x.Id == sub.DepartmentId);
+            var stu = _db.Students.FirstOrDefault(x => x.DepartmentId == sub.DepartmentId);
+            RegistClass rgclass = new RegistClass()
+            {
+                StudentId = stu.Id,
+                ClassSessionId = clas.Id,
+                Status = true,
+                RegistDate = DateTime.Now,
+                Credits = sub.Credits
+            };
+            _db.RegistClasses.Add(rgclass);
+            _db.SaveChanges();
+            return RedirectToAction("HocPhanDaDangKy","Home");
+        }
         /*******/
-        
         public async Task<IActionResult> DanhSachLop(String id)
         {
             var list = from cla in _db.ClassSessions where cla.SubjectId == id select cla;
-            return View(list.ToList());
-            //var regist_courseContext = _db.ClassSessions.Include(s => s.Department);
-            //return View("DSLopHocPhan", await regist_courseContext.ToListAsync());
+            return View(await list.ToListAsync());
+            
         } 
+         
         public IActionResult ThongBao()
-        {
+        { 
             return View();
         }
 

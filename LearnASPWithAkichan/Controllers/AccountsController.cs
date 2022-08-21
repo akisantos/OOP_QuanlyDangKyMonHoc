@@ -36,11 +36,11 @@ namespace LearnASPWithAkichan.Controllers
             {
                 HttpContext.Session.SetString("username", account.UserName.ToString());
                 HttpContext.Session.SetString("role", account.Role.ToString());
-                if (account.PassWord.Equals(a.PassWord) && account.Role == true)
+                if(account.PassWord.Equals(a.PassWord) && account.Role == true)
                 {
                     return RedirectToAction("Index", "Home");
                 }
-                else if (account.PassWord.Equals(a.PassWord) && account.Role == false)
+                else if(account.PassWord.Equals(a.PassWord) && account.Role == false)
                 {
                     return RedirectToAction("QuanLyKyDK","Admin");
                 }
