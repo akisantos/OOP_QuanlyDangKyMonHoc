@@ -10,26 +10,6 @@ namespace LearnASPWithAkichan.Models
             RegistClasses = new HashSet<RegistClass>();
         }
 
-        public ClassSession(ClassSession pre)
-        {
-            Id = pre.Id;
-            Amount = pre.Amount;
-            PointClass = pre.PointClass;
-            PointMid = pre.PointMid;
-            PointEnd = pre.PointEnd;
-            Active = pre.Active;
-            BeginDate = pre.BeginDate;
-            EndDate = pre.EndDate;
-            CommonClass = pre.CommonClass;
-            DepartmentId = pre.DepartmentId;
-            SubjectId = pre.SubjectId;
-            Department = pre.Department;
-            Subject = pre.Subject;
-            RegistClasses = pre.RegistClasses;
-        }
-
-        
-
         public string Id { get; set; } = null!;
         public int Amount { get; set; }
         public double? PointClass { get; set; }

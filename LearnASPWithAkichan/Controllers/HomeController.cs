@@ -94,13 +94,15 @@ namespace LearnASPWithAkichan.Controllers
             var sub = _db.Subjects.FirstOrDefault(x => x.Id == clas.SubjectId);
             var stu = _db.Students.FirstOrDefault(x => x.AccountId == acc.Id);
             //
-            var regclass = _db.RegistClasses.FirstOrDefault(x => x.StudentId == stu.Id && x.ClassSessionId == clas.Id);
+            var regclass = _db.RegistClasses.FirstOrDefault(x => x.StudentId == stu.Id && x.ClassSessionId == clas.Id );
             if (regclass != null)
             {
-                return false;   
+                return false;    
             }
             else
+            {
                 return true;
+            }
         }
         // ---> check môn tuyên quyết(ch xong)
         public bool checkSub(string id)
@@ -116,8 +118,6 @@ namespace LearnASPWithAkichan.Controllers
             //
             var sub = _db.Subjects.FirstOrDefault(x => x.Id == clas.SubjectId);
             var stu = _db.Students.FirstOrDefault(x => x.AccountId == acc.Id);
-
-
             //
             RegistClass rgclass = new RegistClass()
             {
@@ -159,6 +159,7 @@ namespace LearnASPWithAkichan.Controllers
         // ---> lớp học phần trong kế hoạch | ngoài kế hoạch
         public IActionResult ThongBao()
         {
+
            return View();
         }
 

@@ -19,6 +19,7 @@ namespace LearnASPWithAkichan.Models
         public virtual DbSet<Account> Accounts { get; set; } = null!;
         public virtual DbSet<ClassSession> ClassSessions { get; set; } = null!;
         public virtual DbSet<Department> Departments { get; set; } = null!;
+        public virtual DbSet<PrerequisiteSubject> PrerequisiteSubjects { get; set; } = null!;
         public virtual DbSet<RegistClass> RegistClasses { get; set; } = null!;
         public virtual DbSet<Student> Students { get; set; } = null!;
         public virtual DbSet<Subject> Subjects { get; set; } = null!;
@@ -27,7 +28,7 @@ namespace LearnASPWithAkichan.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Data Source=TUAN\\TUAN;Initial Catalog=dkhoc_phan;Integrated Security=True;");
+                optionsBuilder.UseSqlServer("Data Source=BUI_TUAN;Initial Catalog=regist_course;Integrated Security=True;");
             }
         }
 
@@ -140,23 +141,45 @@ namespace LearnASPWithAkichan.Models
                     .HasColumnName("phone");
             });
 
+            modelBuilder.Entity<PrerequisiteSubject>(entity =>
+            {
+                entity.ToTable("prerequisite_subject");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.PrerequisiteSubjectId)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("prerequisite_subject_id")
+                    .IsFixedLength();
+
+                entity.Property(e => e.SubjectId)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("subject_id")
+                    .IsFixedLength();
+
+                entity.HasOne(d => d.PrerequisiteSubjectNavigation)
+                    .WithMany(p => p.PrerequisiteSubjectPrerequisiteSubjectNavigations)
+                    .HasForeignKey(d => d.PrerequisiteSubjectId)
+                    .HasConstraintName("FK__prerequis__prere__52593CB8");
+
+                entity.HasOne(d => d.Subject)
+                    .WithMany(p => p.PrerequisiteSubjectSubjects)
+                    .HasForeignKey(d => d.SubjectId)
+                    .HasConstraintName("FK__prerequis__subje__5165187F");
+            });
+
             modelBuilder.Entity<RegistClass>(entity =>
             {
-                entity.HasKey(e => new { e.ClassSessionId, e.StudentId })
-                    .HasName("PK__regist_c__249FCF5C89324CF5");
-
                 entity.ToTable("regist_class");
+
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.ClassSessionId)
                     .HasMaxLength(10)
                     .IsUnicode(false)
                     .HasColumnName("class_session_id")
-                    .IsFixedLength();
-
-                entity.Property(e => e.StudentId)
-                    .HasMaxLength(10)
-                    .IsUnicode(false)
-                    .HasColumnName("student_id")
                     .IsFixedLength();
 
                 entity.Property(e => e.Credits).HasColumnName("credits");
@@ -167,17 +190,21 @@ namespace LearnASPWithAkichan.Models
 
                 entity.Property(e => e.Status).HasColumnName("status");
 
+                entity.Property(e => e.StudentId)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("student_id")
+                    .IsFixedLength();
+
                 entity.HasOne(d => d.ClassSession)
                     .WithMany(p => p.RegistClasses)
                     .HasForeignKey(d => d.ClassSessionId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__regist_cl__class__3A81B327");
+                    .HasConstraintName("FK__regist_cl__class__4E88ABD4");
 
                 entity.HasOne(d => d.Student)
                     .WithMany(p => p.RegistClasses)
                     .HasForeignKey(d => d.StudentId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK__regist_cl__stude__398D8EEE");
+                    .HasConstraintName("FK__regist_cl__stude__4D94879B");
             });
 
             modelBuilder.Entity<Student>(entity =>
@@ -251,40 +278,6 @@ namespace LearnASPWithAkichan.Models
                     .WithMany(p => p.Subjects)
                     .HasForeignKey(d => d.DepartmentId)
                     .HasConstraintName("FK__subject__departm__2B3F6F97");
-
-                entity.HasMany(d => d.PrerequisiteSubjects)
-                    .WithMany(p => p.Subjects)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "PrerequisiteSubject",
-                        l => l.HasOne<Subject>().WithMany().HasForeignKey("PrerequisiteSubjectId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__prerequis__prere__2F10007B"),
-                        r => r.HasOne<Subject>().WithMany().HasForeignKey("SubjectId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__prerequis__subje__2E1BDC42"),
-                        j =>
-                        {
-                            j.HasKey("SubjectId", "PrerequisiteSubjectId").HasName("PK__prerequi__5E9C16D777E628E1");
-
-                            j.ToTable("prerequisite_subject");
-
-                            j.IndexerProperty<string>("SubjectId").HasMaxLength(10).IsUnicode(false).HasColumnName("subject_id").IsFixedLength();
-
-                            j.IndexerProperty<string>("PrerequisiteSubjectId").HasMaxLength(10).IsUnicode(false).HasColumnName("prerequisite_subject_id").IsFixedLength();
-                        });
-
-                entity.HasMany(d => d.Subjects)
-                    .WithMany(p => p.PrerequisiteSubjects)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "PrerequisiteSubject",
-                        l => l.HasOne<Subject>().WithMany().HasForeignKey("SubjectId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__prerequis__subje__2E1BDC42"),
-                        r => r.HasOne<Subject>().WithMany().HasForeignKey("PrerequisiteSubjectId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK__prerequis__prere__2F10007B"),
-                        j =>
-                        {
-                            j.HasKey("SubjectId", "PrerequisiteSubjectId").HasName("PK__prerequi__5E9C16D777E628E1");
-
-                            j.ToTable("prerequisite_subject");
-
-                            j.IndexerProperty<string>("SubjectId").HasMaxLength(10).IsUnicode(false).HasColumnName("subject_id").IsFixedLength();
-
-                            j.IndexerProperty<string>("PrerequisiteSubjectId").HasMaxLength(10).IsUnicode(false).HasColumnName("prerequisite_subject_id").IsFixedLength();
-                        });
             });
 
             OnModelCreatingPartial(modelBuilder);
