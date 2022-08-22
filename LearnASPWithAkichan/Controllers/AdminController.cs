@@ -137,7 +137,7 @@ namespace LearnASPWithAkichan.Controllers
         public IActionResult TaoLopLopHocPhan()
         {
             ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name");
-            ViewData["SubjectId"] = new SelectList(_context.Subjects, "Id", "Name");
+            ViewData["SubjectId"] = new SelectList(_context.Subjects, "Id", "Name" );
             return View();
         }
 
@@ -169,19 +169,7 @@ namespace LearnASPWithAkichan.Controllers
         }
 
 
-        public IActionResult ChinhSuaLopHocPhan(string id)
-        {
-            var class_sesion = _context.ClassSessions.FirstOrDefault(c => c.Id == id);
-            if (class_sesion == null)
-            {
-                TempData["notification"] = "Xảy ra sự cố, vui lòng quay lại sau! ";
-                return View();
-            }
-            else
-            {
-                return View(class_sesion);
-            }
-        }
+        
 
         // tạo môn học
         [HttpPost]
@@ -194,7 +182,7 @@ namespace LearnASPWithAkichan.Controllers
                 {
                     _context.Add(subject);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    return RedirectToAction(nameof(QuanLyMonHoc));
                 }
                 else
                 {
@@ -221,7 +209,7 @@ namespace LearnASPWithAkichan.Controllers
             {
                 return NotFound();
             }
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Id", subject.DepartmentId);
+            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name", subject.DepartmentId);
             return View("ChinhSuaMonHoc", subject);
         }
 
@@ -239,6 +227,7 @@ namespace LearnASPWithAkichan.Controllers
                 try
                 {
                     _context.Update(subject);
+
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
@@ -254,12 +243,12 @@ namespace LearnASPWithAkichan.Controllers
                 }
                 return RedirectToAction("QuanLyMonHoc");
             }
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Id", subject.DepartmentId);
+            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name", subject.DepartmentId);
             return View("ChinhSuaMonHoc", subject);
-            
         }
 
         // Edit lớp học phần
+
         public async Task<IActionResult> EditLHP(string id)
         {
             if (id == null || _context.ClassSessions == null)
@@ -305,11 +294,11 @@ namespace LearnASPWithAkichan.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("QuanLyLopHocPhan","Admin");
             }
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Id", classSession.DepartmentId);
-            ViewData["SubjectId"] = new SelectList(_context.Subjects, "Id", "Id", classSession.SubjectId);
-            return View(classSession);
+            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name", classSession.DepartmentId);
+            ViewData["SubjectId"] = new SelectList(_context.Subjects, "Id", "Name", classSession.SubjectId);
+            return View("ChinhSuaLopHocPhan", classSession);
         }
 
 

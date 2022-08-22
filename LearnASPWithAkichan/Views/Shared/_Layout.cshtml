@@ -2,7 +2,8 @@
 @inject IHttpContextAccessor Accessor
 
 @{
-    var username = @Accessor.HttpContext.Session.GetString("username");
+    var username = @Accessor.HttpContext.Session.GetString("studentInfo");
+
 }
 
 <!DOCTYPE html>

@@ -102,6 +102,7 @@ namespace LearnASPWithAkichan.Controllers
             else
             {
                 return true;
+            }
         }
         // ham lay danh sach da dang ky cua sinh vien
         private List<RegistClass> DanhSachLopDaDangKy(string student_id)

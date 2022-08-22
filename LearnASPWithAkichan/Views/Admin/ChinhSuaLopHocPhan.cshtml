@@ -44,19 +44,19 @@
                             <div class="user-box">
                                 <label asp-for="PointClass" class="control-label"></label>
                                 <br /> <br />
-                                <input asp-for="PointClass" class="form-control" disabled/>
+                                <input asp-for="PointClass" class="form-control" type="hidden" />
                                 <span asp-validation-for="PointClass" class="text-danger"></span>
                             </div>
                             <div class="user-box">
                                 <label asp-for="PointMid" class="control-label"></label>
                                 <br /> <br />
-                                <input asp-for="PointMid" class="form-control"disabled />
+                                <input asp-for="PointMid" class="form-control" type="hidden" />
                                 <span asp-validation-for="PointMid" class="text-danger"></span>
                             </div>
                             <div class="user-box">
                                 <label asp-for="PointEnd" class="control-label"></label>
                                 <br /> <br />
-                                <input asp-for="PointEnd" class="form-control" disabled />
+                                <input asp-for="PointEnd" class="form-control" type="hidden" />
                                 <span asp-validation-for="PointEnd" class="text-danger"></span>
                             </div>
                             <div class="user-box form-group form-check ">
@@ -84,13 +84,13 @@
                             <div class="form-group">
                                 <label asp-for="DepartmentId" class="control-label"></label>
                                 <br /> <br />
-                                <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.DepartmentId" style="min-height: 5rem" disabled></select>
+                                <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.DepartmentId" style="min-height: 5rem" type="hidden" ></select>
                                 <span asp-validation-for="DepartmentId" class="text-danger"></span>
                             </div>
                             <div class="user-box">
                                 <label asp-for="SubjectId" class="control-label"></label>
                                 <br /> <br />
-                                <select asp-for="SubjectId" class="form-control" asp-items="ViewBag.SubjectId" style="min-height: 5rem" disabled></select>
+                                <select asp-for="SubjectId" class="form-control" asp-items="ViewBag.SubjectId" style="min-height: 5rem" type="hidden"></select>
                                 <span asp-validation-for="SubjectId" class="text-danger"></span>
                             </div>
 
@@ -99,7 +99,7 @@
                               <span></span>
                               <span></span>
                               <span></span>
-                              Chỉnh sửa
+                              Lưu
                             </a>
 
                             <a asp-action="QuanLyLopHocPhan">

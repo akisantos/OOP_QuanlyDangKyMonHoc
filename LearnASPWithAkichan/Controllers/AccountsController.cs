@@ -36,19 +36,27 @@ namespace LearnASPWithAkichan.Controllers
             {
                 HttpContext.Session.SetString("username", account.UserName.ToString());
                 HttpContext.Session.SetString("role", account.Role.ToString());
-                if(account.PassWord.Equals(a.PassWord) && account.Role == true)
+                
+                if (account.PassWord.Equals(a.PassWord))
                 {
-                    return RedirectToAction("Index", "Home");
-                }
-                else if(account.PassWord.Equals(a.PassWord) && account.Role == false)
-                {
-                    return RedirectToAction("QuanLyKyDK","Admin");
+                    if (account.Role)
+                    {
+                        var studentInfo = _context.Students.FirstOrDefault(s => s.AccountId == account.Id);
+                        HttpContext.Session.SetString("studentInfo", studentInfo.Name);
+                        return RedirectToAction("Index", "Home");
+                    }
+                    else
+                    {
+                        HttpContext.Session.SetString("studentInfo", "Quản trị viên");
+                        return RedirectToAction("QuanLyKyDK", "Admin");
+                    }
                 }
                 else
                 {
                     TempData["notification"] = "Sai mật khẩu, vui lòng đăng nhập lại";
                     return RedirectToAction("Index", "Accounts");
                 }
+               
 
             }
         }
