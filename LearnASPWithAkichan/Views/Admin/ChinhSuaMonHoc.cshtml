@@ -31,7 +31,7 @@
                     <p class="mb-1 h-1">@ViewData["Title"]</p>
                     <p class="text-muted mb-2"></p>
                     <div class="d-flex flex-column login-box ">
-                        <form asp-controller="Admin" asp-action="Edit" id="formSub">
+                        <form asp-controller="Admin" asp-action="EditMonHoc" id="formSub">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="user-box">
                                 <label asp-for="Id" class="control-label"></label>
@@ -62,7 +62,7 @@
                               <span></span>
                               <span></span>
                               <span></span>
-                              Tạo
+                              Chỉnh sửa
                             </a>
 
                             <a asp-action="QuanLyMonHoc">

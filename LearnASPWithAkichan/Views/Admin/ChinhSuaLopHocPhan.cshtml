@@ -31,7 +31,7 @@
                     <p class="mb-1 h-1">@ViewData["Title"]</p>
                     <p class="text-muted mb-2"></p>
                     <div class="d-flex flex-column login-box " style="overflow-y:auto !important; max-height:60vh">
-                        <form asp-controller="Admin" asp-action="CreateSubject" id="formSub" >
+                        <form asp-controller="Admin" asp-action="EditLHP" id="formSub" >
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input type="hidden" asp-for="Id" />
@@ -44,19 +44,19 @@
                             <div class="user-box">
                                 <label asp-for="PointClass" class="control-label"></label>
                                 <br /> <br />
-                                <input asp-for="PointClass" class="form-control" />
+                                <input asp-for="PointClass" class="form-control" disabled/>
                                 <span asp-validation-for="PointClass" class="text-danger"></span>
                             </div>
                             <div class="user-box">
                                 <label asp-for="PointMid" class="control-label"></label>
                                 <br /> <br />
-                                <input asp-for="PointMid" class="form-control" />
+                                <input asp-for="PointMid" class="form-control"disabled />
                                 <span asp-validation-for="PointMid" class="text-danger"></span>
                             </div>
                             <div class="user-box">
                                 <label asp-for="PointEnd" class="control-label"></label>
                                 <br /> <br />
-                                <input asp-for="PointEnd" class="form-control" />
+                                <input asp-for="PointEnd" class="form-control" disabled />
                                 <span asp-validation-for="PointEnd" class="text-danger"></span>
                             </div>
                             <div class="user-box form-group form-check ">
@@ -84,13 +84,13 @@
                             <div class="form-group">
                                 <label asp-for="DepartmentId" class="control-label"></label>
                                 <br /> <br />
-                                <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.DepartmentId" style="min-height: 5rem"></select>
+                                <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.DepartmentId" style="min-height: 5rem" disabled></select>
                                 <span asp-validation-for="DepartmentId" class="text-danger"></span>
                             </div>
                             <div class="user-box">
                                 <label asp-for="SubjectId" class="control-label"></label>
                                 <br /> <br />
-                                <select asp-for="SubjectId" class="form-control" asp-items="ViewBag.SubjectId" style="min-height: 5rem"></select>
+                                <select asp-for="SubjectId" class="form-control" asp-items="ViewBag.SubjectId" style="min-height: 5rem" disabled></select>
                                 <span asp-validation-for="SubjectId" class="text-danger"></span>
                             </div>
 
@@ -99,7 +99,7 @@
                               <span></span>
                               <span></span>
                               <span></span>
-                              Tạo
+                              Chỉnh sửa
                             </a>
 
                             <a asp-action="QuanLyLopHocPhan">
