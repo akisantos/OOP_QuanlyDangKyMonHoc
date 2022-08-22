@@ -8,12 +8,12 @@
     <link rel="stylesheet" href="~/css/index.css" type="text/css" />
 }
 
-            <div class="filter">
+            @*<div class="filter">
                 <ul>
                     <li class="btn btn-outline btnActive" id="theo-ke-hoach-btn">Theo kế hoạch</li>
                     <li class="btn btn-outline" id="ngoai-ke-hoach-btn">Ngoài kế hoạch</li>
                 </ul>
-            </div>
+            </div>*@
             
             <!-- Ghi Xuất dữ liệu ở đây-->
             <div class="contentWrapper">
@@ -53,7 +53,7 @@
                         </div>
                         <div class="cardImage">
                           <div class="buttonAction">
-                            <a class="btn btn-outline dangKy" id="register-btn" data-bs-toggle="modal" data-bs-target="#modalConfirmDelete"> Huỷ đăng ký</a>
+                            <a class="btn btn-outline dangKy" id="register-btn" data-bs-toggle="modal" data-bs-target="#modalConfirmDelete" asp-route-id="@item.ClassSessionId" asp-action="deleteLHP" asp-controller="Home"> Huỷ đăng ký</a>
 
                           </div>
                         </div>
@@ -83,7 +83,7 @@
 
           <!--Footer-->
           <div class="modal-footer" style="display:flex !important; justify-content: center !important;">
-            <a href="" class="btn btn-outline-danger">Xác nhận</a>
+            <a href="" class="btn btn-outline-danger" >Xác nhận</a>
             <a type="button" class="btn btn-danger waves-effect" data-bs-dismiss="modal">Không</a>
           </div>
         </div>

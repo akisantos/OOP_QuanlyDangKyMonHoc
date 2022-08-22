@@ -732,3 +732,10 @@ body {
         min-width: 97.5%;
     }
 }
+.thea{
+    text-decoration:none;
+    color: white
+}
+.thea:hover{
+    color:blue
+}
