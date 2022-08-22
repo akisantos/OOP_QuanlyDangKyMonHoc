@@ -8,8 +8,8 @@ namespace LearnASPWithAkichan.Models
         public Subject()
         {
             ClassSessions = new HashSet<ClassSession>();
-            PrerequisiteSubjects = new HashSet<Subject>();
-            Subjects = new HashSet<Subject>();
+            PrerequisiteSubjectPrerequisiteSubjectNavigations = new HashSet<PrerequisiteSubject>();
+            PrerequisiteSubjectSubjects = new HashSet<PrerequisiteSubject>();
         }
 
         public string Id { get; set; } = null!;
@@ -19,8 +19,7 @@ namespace LearnASPWithAkichan.Models
 
         public virtual Department? Department { get; set; }
         public virtual ICollection<ClassSession> ClassSessions { get; set; }
-
-        public virtual ICollection<Subject> PrerequisiteSubjects { get; set; }
-        public virtual ICollection<Subject> Subjects { get; set; }
+        public virtual ICollection<PrerequisiteSubject> PrerequisiteSubjectPrerequisiteSubjectNavigations { get; set; }
+        public virtual ICollection<PrerequisiteSubject> PrerequisiteSubjectSubjects { get; set; }
     }
 }

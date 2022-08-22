@@ -5,13 +5,14 @@ namespace LearnASPWithAkichan.Models
 {
     public partial class RegistClass
     {
+        public int Id { get; set; }
         public int? Credits { get; set; }
         public DateTime RegistDate { get; set; }
-        public bool Status { get; set; }
-        public string StudentId { get; set; } = null!;
-        public string ClassSessionId { get; set; } = null!;
+        public bool? Status { get; set; }
+        public string? StudentId { get; set; }
+        public string? ClassSessionId { get; set; }
 
-        public virtual ClassSession ClassSession { get; set; } = null!;
-        public virtual Student Student { get; set; } = null!;
+        public virtual ClassSession? ClassSession { get; set; }
+        public virtual Student? Student { get; set; }
     }
 }
