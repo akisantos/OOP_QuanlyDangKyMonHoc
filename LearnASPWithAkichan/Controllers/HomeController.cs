@@ -34,6 +34,8 @@ namespace LearnASPWithAkichan.Controllers
             var sub = _db.Subjects.FirstOrDefault(x => x.DepartmentId == stu.DepartmentId);
             var listSub = from s in _db.Subjects where s.DepartmentId == k.Id select s;
             //
+
+            TempData["checker"] = "Đăng ký";
             return View(await listSub.ToListAsync());
         }
         /*******/
@@ -58,20 +60,44 @@ namespace LearnASPWithAkichan.Controllers
             var sub = _db.Subjects.FirstOrDefault(x => x.Id == clas.SubjectId);
             var stu = _db.Students.FirstOrDefault(x => x.AccountId == acc.Id);
             //
-            RegistClass rgclass = new RegistClass()
+            if (checkClass(id) == true)
             {
-                StudentId = stu.Id,
-                ClassSessionId = clas.Id,
-                Status = true,
-                RegistDate = DateTime.Now,
-                Credits = sub.Credits
-            };
-            _db.RegistClasses.Add(rgclass);
-            _db.SaveChanges();
-            return RedirectToAction("HocPhanDaDangKy","Home");
+                RegistClass rgclass = new RegistClass()
+                {
+                    StudentId = stu.Id,
+                    ClassSessionId = clas.Id,
+                    Status = true,
+                    RegistDate = DateTime.Now,
+                    Credits = sub.Credits
+                };
+                _db.RegistClasses.Add(rgclass);
+                _db.SaveChanges();
+                return RedirectToAction("HocPhanDaDangKy", "Home");
+            }
+            else
+            {
+                return RedirectToAction("DanhSachLop", "Home");
+            }
+            
         }
         // ---> check học phân đã đăng ký ()
-        
+        public bool checkClass(string id)
+        {
+            string username = HttpContext.Session.GetString("username");
+            var acc = _db.Accounts.FirstOrDefault(x => x.UserName == username);
+            var clas = _db.ClassSessions.FirstOrDefault(x => x.Id == id);
+            //
+            var sub = _db.Subjects.FirstOrDefault(x => x.Id == clas.SubjectId);
+            var stu = _db.Students.FirstOrDefault(x => x.AccountId == acc.Id);
+            //
+            var regclass = _db.RegistClasses.FirstOrDefault(x => x.StudentId == stu.Id && x.ClassSessionId == clas.Id);
+            if (regclass != null)
+            {
+                return false;   
+            }
+            else
+                return true;
+        }
         // ---> lớp học phần trong kế hoạch | ngoài kế hoạch
         // ---> check môn tuyên quyết
         // ---> hủy đăng ký
