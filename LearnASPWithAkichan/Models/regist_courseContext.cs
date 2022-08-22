@@ -38,7 +38,7 @@ namespace LearnASPWithAkichan.Models
             {
                 entity.ToTable("account");
 
-                entity.HasIndex(e => e.UserName, "UQ__account__7C9273C407D22EDA")
+                entity.HasIndex(e => e.UserName, "UQ__account__7C9273C44147142B")
                     .IsUnique();
 
                 entity.Property(e => e.Id)
@@ -115,10 +115,10 @@ namespace LearnASPWithAkichan.Models
             {
                 entity.ToTable("department");
 
-                entity.HasIndex(e => e.Name, "UQ__departme__72E12F1BB1B2FDEF")
+                entity.HasIndex(e => e.Name, "UQ__departme__72E12F1B1CDB9A6A")
                     .IsUnique();
 
-                entity.HasIndex(e => e.Phone, "UQ__departme__B43B145FE3EA6A38")
+                entity.HasIndex(e => e.Phone, "UQ__departme__B43B145FFE502167")
                     .IsUnique();
 
                 entity.Property(e => e.Id)
