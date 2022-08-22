@@ -29,28 +29,35 @@ namespace LearnASPWithAkichan.Controllers
             string username = HttpContext.Session.GetString("username");
             var acc = _db.Accounts.FirstOrDefault(x => x.UserName == username);
             var stu = _db.Students.FirstOrDefault(x => x.AccountId == acc.Id);
+            //
             var k = _db.Departments.FirstOrDefault(x => x.Id == stu.DepartmentId);
             var sub = _db.Subjects.FirstOrDefault(x => x.DepartmentId == stu.DepartmentId);
             var listSub = from s in _db.Subjects where s.DepartmentId == k.Id select s;
+            //
             return View(await listSub.ToListAsync());
         }
         /*******/
-        // Dang ky lop hoc phan hoc phan
+        // Xem danh sách lớp học phần đã đăng ký
         public async Task<IActionResult> HocPhanDaDangKy()
         {
             string username = HttpContext.Session.GetString("username");
             var acc = _db.Accounts.FirstOrDefault(x => x.UserName == username);
             var stuID = _db.Students.FirstOrDefault(x => x.AccountId == acc.Id);
+            //
             var regTest = _db.RegistClasses.Where(t => t.StudentId == stuID.Id);
-            //var regclass = _db.RegistClasses.ToListAsync();
+            //
             return View(await regTest.ToListAsync());
         }
+        //Đăng ký lớp học phần 
         public IActionResult add(string id)
         {
+            string username = HttpContext.Session.GetString("username");
+            var acc = _db.Accounts.FirstOrDefault(x => x.UserName == username);
             var clas = _db.ClassSessions.FirstOrDefault(x => x.Id == id);
+            //
             var sub = _db.Subjects.FirstOrDefault(x => x.Id == clas.SubjectId);
-            var dep = _db.Departments.FirstOrDefault(x => x.Id == sub.DepartmentId);
-            var stu = _db.Students.FirstOrDefault(x => x.DepartmentId == sub.DepartmentId);
+            var stu = _db.Students.FirstOrDefault(x => x.AccountId == acc.Id);
+            //
             RegistClass rgclass = new RegistClass()
             {
                 StudentId = stu.Id,
@@ -63,6 +70,11 @@ namespace LearnASPWithAkichan.Controllers
             _db.SaveChanges();
             return RedirectToAction("HocPhanDaDangKy","Home");
         }
+        // ---> check học phân đã đăng ký ()
+        
+        // ---> lớp học phần trong kế hoạch | ngoài kế hoạch
+        // ---> check môn tuyên quyết
+        // ---> hủy đăng ký
         /*******/
         public async Task<IActionResult> DanhSachLop(String id)
         {
