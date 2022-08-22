@@ -53,7 +53,8 @@
                         </div>
                         <div class="cardImage">
                           <div class="buttonAction">
-                            <a class="btn btn-outline dangKy" id="register-btn" data-bs-toggle="modal" data-bs-target="#modalConfirmDelete" asp-route-id="@item.ClassSessionId" asp-action="deleteLHP" asp-controller="Home"> Huỷ đăng ký</a>
+                              
+                            <a class="btn btn-outline dangKy" id="register-btn"  asp-action="HuyDangKy" asp-route-id="@item.ClassSessionId"  asp-controller="Home"> Huỷ đăng ký</a>
 
                           </div>
                         </div>
@@ -61,8 +62,8 @@
                     }
                 
                 
-                </div>
-
+                </div>@*data-bs-toggle="modal" data-bs-target="#modalConfirmDelete" *@
+@*
     <!--Modal: modalConfirmDelete-->
     <div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
       aria-hidden="true">
@@ -91,7 +92,7 @@
       </div>
     </div>
     <!--Modal: modalConfirmDelete-->
-    
+    *@
     <script>
         $(".menu li:nth-child(2)").addClass("active");
     </script>

@@ -11,7 +11,7 @@
             <div class="filter">
                 <ul>
                     <li class="btn btn-outline " id="theo-ke-hoach-btn"><a asp-action="Index">Theo kế hoạch</a> </li>
-                    <li class="btn btn-outline btnActive"  id="ngoai-ke-hoach-btn"> </li>
+                    <li class="btn btn-outline btnActive"  id="ngoai-ke-hoach-btn">Ngoài kế hoạch </li>
                 </ul>
             </div>
             
@@ -22,19 +22,20 @@
                 
                 @foreach (var item in Model)
                 {
-                    <div class="contentCard">
+                   <div class="contentCard">
                     <div class="cardContent">
                       <div class="cardMainContent">
-                        <p>@item.Id</p>
-                        <h5></h5>
-                        <p></p>
+                        <p>Mã môn: @item.SubjectId</p>
+                        <h5>Mã lớp học phần: @item.Id</h5>
+                        <p>@item.BeginDate - @item.EndDate</p>
                       </div>
                       <div class="cardSubContent">
+                        <p>Số lượng: @item.Amount</p>
                       </div>
                     </div>
-                    <div class="cardImage" id="DK">
+                    <div class="cardImage">
                       <div class="buttonAction">
-                        <a class="btn btn-outline dangKy" asp-route-id="@item.Id" asp-action="DanhSachLop" > Xem danh sách lớp</a>
+                        <a  class="btn btn-outline dangKy" asp-action="add" asp-controller="Home" asp-route-id="@item.Id" id="register-btn" disabled tabindex="-1">Đăng ký </a>
                       </div>
                     </div>
                   </div>

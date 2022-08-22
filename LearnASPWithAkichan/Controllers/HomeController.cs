@@ -86,7 +86,7 @@ namespace LearnASPWithAkichan.Controllers
         }
         // ---> check học phân đã đăng ký ()
         public bool checkClass(string id)
-        {
+           {
             string username = HttpContext.Session.GetString("username");
             var acc = _db.Accounts.FirstOrDefault(x => x.UserName == username);
             var clas = _db.ClassSessions.FirstOrDefault(x => x.Id == id);
@@ -94,63 +94,76 @@ namespace LearnASPWithAkichan.Controllers
             var sub = _db.Subjects.FirstOrDefault(x => x.Id == clas.SubjectId);
             var stu = _db.Students.FirstOrDefault(x => x.AccountId == acc.Id);
             //
-            var regclass = _db.RegistClasses.FirstOrDefault(x => x.StudentId == stu.Id && x.ClassSessionId == clas.Id );
+            var regclass = _db.RegistClasses.FirstOrDefault(x => x.StudentId == stu.Id && x.ClassSessionId == clas.Id);
             if (regclass != null)
             {
                 return false;
             }
             else
             {
-                return true;
+                return true; 
             }
         }
-        // ham lay danh sach da dang ky cua sinh vien
-        private List<RegistClass> DanhSachLopDaDangKy(string student_id)
-        {
-            // list sinh vien da dang ky
-            List<RegistClass> lst_regist_class = new List<RegistClass>();
-            lst_regist_class = _db.RegistClasses.Where(s => s.StudentId == student_id && s.Status == false).ToList();
-            return lst_regist_class;
-        }
-        // hàm kiểm mon hoc da hoc chua
-        public bool KiemTraLopDaDangKy(string subject_id, string student_id)
-        {
-            List<RegistClass> danhSachDaDangKy = DanhSachLopDaDangKy(student_id);
-            List<ClassSession> danhSachLopHP = _db.ClassSessions.Where(s => s.SubjectId == subject_id).ToList();
-            foreach (var item in danhSachDaDangKy)
+            // ham lay danh sach da dang ky cua sinh vien
+         private List<RegistClass> DanhSachLopDaDangKy(string student_id)
+          {
+             // list sinh vien da dang ky
+                List<RegistClass> lst_regist_class = new List<RegistClass>();
+                lst_regist_class = _db.RegistClasses.Where(s => s.StudentId == student_id && s.Status == false).ToList();
+                return lst_regist_class;      
+          }     
+            // hàm kiểm mon hoc da hoc chua
+         public bool KiemTraLopDaDangKy(string subject_id, string student_id)
             {
-                foreach (var item2 in danhSachLopHP)
+                List<RegistClass> danhSachDaDangKy = DanhSachLopDaDangKy(student_id);
+                List<ClassSession> danhSachLopHP = _db.ClassSessions.Where(s => s.SubjectId == subject_id).ToList();
+                foreach (var item in danhSachDaDangKy)
                 {
-                    if (item.ClassSessionId == item2.Id)
+                    foreach (var item2 in danhSachLopHP)
                     {
-                        return true;
+                        if (item.ClassSessionId == item2.Id)
+                        {
+                            return true;
+                        }
                     }
                 }
-            }
-            return false;
-        }
-        // kiem tra mon tien quyet
-        public List<Subject> kiemTraMonTienQuyet(string subject_id)
-        {
-            List<Subject> subjects = new List<Subject>();
+                return false;
+            }     
+            // kiem tra mon tien quyet
+         public List<Subject> kiemTraMonTienQuyet(string subject_id)
+            {
+                List<Subject> subjects = new List<Subject>();
 
-            var lst_monTienQuyet = _db.PrerequisiteSubjects.Where(s => s.SubjectId == subject_id).ToList();
-            foreach (var item in lst_monTienQuyet)
-            {
-                if (!String.IsNullOrEmpty(item.PrerequisiteSubjectId))
+                var lst_monTienQuyet = _db.PrerequisiteSubjects.Where(s => s.SubjectId == subject_id).ToList();
+                foreach (var item in lst_monTienQuyet)
                 {
-                    foreach (var item2 in _db.Subjects.Where(s=> s.Id== item.PrerequisiteSubjectId))
+                    if (!String.IsNullOrEmpty(item.PrerequisiteSubjectId))
                     {
-                        subjects.Add(item2);
+                        foreach (var item2 in _db.Subjects.Where(s => s.Id == item.PrerequisiteSubjectId))
+                        {
+                            subjects.Add(item2);
+                        }
                     }
                 }
-            }
-            return subjects;
-        }
+                return subjects;
+          }
 
         // ---> hủy đăng ký(bug)
-        public IActionResult deleteLHP(string id)
+        public IActionResult deleteLHP(string idClass)
         {
+            /* string username = HttpContext.Session.GetString("username");
+             var acc = _db.Accounts.FirstOrDefault(x => x.UserName == username);
+             ClassSession clas = _db.ClassSessions.FirstOrDefault(x => x.Id == idClass);
+             //
+             var sub = _db.Subjects.FirstOrDefault(x => x.Id == clas.SubjectId);
+             var stu = _db.Students.FirstOrDefault(x => x.AccountId == acc.Id);
+             //
+             RegistClass rgclass = _db.RegistClasses.Where(x => x.StudentId == stu.Id && x.ClassSessionId == clas.Id);
+             _db.RegistClasses.Remove(rgclass);
+             clas.Amount += 1;
+             _db.ClassSessions.Update(clas);
+             _db.SaveChanges();
+             return RedirectToAction("HocPhanDaDangKy", "Home");*/
             string username = HttpContext.Session.GetString("username");
             var acc = _db.Accounts.FirstOrDefault(x => x.UserName == username);
             var clas = _db.ClassSessions.FirstOrDefault(x => x.Id == id);
@@ -170,41 +183,62 @@ namespace LearnASPWithAkichan.Controllers
             _db.SaveChanges();
             return RedirectToAction("HocPhanDaDangKy", "Home");
         }
+        public async Task<IActionResult> HuyDangKy(string idClass)
+        {
+            string username = HttpContext.Session.GetString("username");
+            var acc = _db.Accounts.FirstOrDefault(x => x.UserName == username);
+            var stu = _db.Students.FirstOrDefault(x => x.AccountId == acc.Id);
+            var clas = _db.ClassSessions.FirstOrDefault(x => x.Id == idClass);
+            //
+            var rgclass = _db.RegistClasses.FirstOrDefault(x => x.StudentId == stu.Id && x.ClassSessionId == clas.Id);
+            if (rgclass != null)
+            {
+                _db.RegistClasses.Remove(rgclass);
+                clas.Amount = 1;
+                _db.ClassSessions.Update(clas);
+                await _db.SaveChangesAsync();
+                return RedirectToAction("HocPhanDaDangKy", "Home"); 
+            }
+            else
+            {
+                return RedirectToAction("HocPhanDaDangKy", "Home");
+            }
+        }
         /*******/
         public async Task<IActionResult> DanhSachLop(string id)
-        {
-            string stuID = HttpContext.Session.GetString("studentID");
-            List<RegistClass> lopDaDangKy = await _db.RegistClasses.Where(x => x.StudentId == stuID).ToListAsync();
-            List<ClassSession> list = await _db.ClassSessions.Where(x => x.SubjectId == id).ToListAsync();
-            foreach (var item in list.ToList())
             {
-                foreach (var item2 in lopDaDangKy.ToList())
+                string stuID = HttpContext.Session.GetString("studentID");
+                List<RegistClass> lopDaDangKy = await _db.RegistClasses.Where(x => x.StudentId == stuID).ToListAsync();
+                List<ClassSession> list = await _db.ClassSessions.Where(x => x.SubjectId == id).ToListAsync();
+                foreach (var item in list.ToList())
                 {
-                    if (item2.ClassSessionId == item.Id)
+                    foreach (var item2 in lopDaDangKy.ToList())
                     {
-
-                        list.Remove(item);
+                        if (item2.ClassSessionId == item.Id)
+                        {
+                            list.Remove(item);
+                        }
                     }
+
                 }
-
+                if (list.Count() == 0)
+                {
+                    ViewData["Description"] = "Đã đăng ký hết !!!!! ";
+                }
+                return View(list);
             }
-            if (list.Count() == 0)
-            {
-                ViewData["Description"] = "Đã đăng ký hết !!!!! ";
-            }
-            return View(list);
-        }
 
-        // ---> lớp học phần trong kế hoạch | ngoài kế hoạch
+            // ---> lớp học phần trong kế hoạch | ngoài kế hoạch
         public IActionResult ThongBao()
         {
-            return View();
-        }
+            var list_class_nkh = from s in _db.ClassSessions where s.CommonClass == true select s;
+            return View(list_class_nkh.ToList());
+        }            
 
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        }
-    }
+            [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+            public IActionResult Error()
+            {
+                return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            }   
+        } 
 }
