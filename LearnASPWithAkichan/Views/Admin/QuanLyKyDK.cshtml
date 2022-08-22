@@ -1,7 +1,7 @@
 ﻿@model List<LearnASPWithAkichan.Models.KyDangKy>
 @{
     ViewData["Title"] = "Quản lý kỳ đăng ký";
-    ViewData["Description"] = "Thêm, chỉnh sửa kỳ đăng ký";
+    ViewData["Description"] = TempData["notification"];
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 @section AddToHead{
@@ -37,29 +37,34 @@
                 </div>      
                 
 
-                @foreach (var item in Model)
-                {
-                    <div class="contentCard">
-                        <div class="cardContent">
-                            <div class="cardMainContent">
+                @{
+                    if(Model != null)
+                    {
+                        @foreach (var item in Model)
+                            {
+                                <div class="contentCard">
+                                    <div class="cardContent">
+                                        <div class="cardMainContent">
                               
-                                <form asp-action="XoaKyDangKy" id="kyDangKyForm">
-                                        <h5>@item.BeginDate - @item.EndDate<h5>
-                                         <input type="hidden" name="BeginDate" value="@item.BeginDate"/>
-                                         <input type="hidden" name="EndDate" value="@item.EndDate"/>
-                                </form>
+                                            <form asp-action="XoaKyDangKy" id="kyDangKyForm">
+                                                    <h5>@item.BeginDate - @item.EndDate<h5>
+                                                     <input type="hidden" name="BeginDate" value="@item.BeginDate"/>
+                                                     <input type="hidden" name="EndDate" value="@item.EndDate"/>
+                                            </form>
                                 
-                            </div>
-                            <div class="cardSubContent">
+                                        </div>
+                                        <div class="cardSubContent">
                                
-                            </div>
-                        </div>
-                        <div class="cardImage">
-                            <div class="buttonAction">
-                                <a class="btn btn-outline" onclick="document.getElementById('kyDangKyForm').submit();" >Xoá</a>
-                            </div>
-                        </div>
-                    </div>
+                                        </div>
+                                    </div>
+                                    <div class="cardImage">
+                                        <div class="buttonAction">
+                                            <a class="btn btn-outline" onclick="document.getElementById('kyDangKyForm').submit();" >Xoá</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            }
+                    }
                 }
                 
                 

@@ -11,33 +11,63 @@ namespace LearnASPWithAkichan.Controllers
     {
         private readonly ILogger<HomeController> _logger;
         private readonly regist_courseContext _db;
-
+        private bool RoleCheckByHand;
+        private bool trongKyDangKy;
         public HomeController(ILogger<HomeController> logger, regist_courseContext db)
         {
             _logger = logger;
             _db = db;
+           
         }
 
 
         public IActionResult Login()
         {
+            HttpContext.Session.Remove("username");
+            HttpContext.Session.Remove("role");
+            HttpContext.Session.Remove("trongKyDangKy");
+
             return RedirectToAction("Index", "Accounts");
         }
         /*******/
         public async Task<IActionResult> Index()
         {
-            string username = HttpContext.Session.GetString("username");
-            var acc = _db.Accounts.FirstOrDefault(x => x.UserName == username);
-            var stu = _db.Students.FirstOrDefault(x => x.AccountId == acc.Id);
-            HttpContext.Session.SetString("studentID", stu.Id);
-            //
-            var k = _db.Departments.FirstOrDefault(x => x.Id == stu.DepartmentId);
-            var sub = _db.Subjects.FirstOrDefault(x => x.DepartmentId == stu.DepartmentId);
-            var listSub = from s in _db.Subjects where s.DepartmentId == k.Id select s;
-            //
+            if (HttpContext.Session.GetString("role") == "True")
+            {
+                RoleCheckByHand = true;
+            }
+            else
+            {
+                RoleCheckByHand = false;
+            }
 
-            TempData["checker"] = "Đăng ký";
-            return View(await listSub.ToListAsync());
+            if (HttpContext.Session.GetString("trongKyDangKy") == "True")
+            {
+                trongKyDangKy = true;
+            }
+            else
+            {
+                trongKyDangKy = false;
+            }
+
+            if (trongKyDangKy && RoleCheckByHand)
+            {
+                string username = HttpContext.Session.GetString("username");
+                var acc = _db.Accounts.FirstOrDefault(x => x.UserName == username);
+                var stu = _db.Students.FirstOrDefault(x => x.AccountId == acc.Id);
+                HttpContext.Session.SetString("studentID", stu.Id);
+                var k = _db.Departments.FirstOrDefault(x => x.Id == stu.DepartmentId);
+                var sub = _db.Subjects.FirstOrDefault(x => x.DepartmentId == stu.DepartmentId);
+                var listSub = from s in _db.Subjects where s.DepartmentId == k.Id select s;
+                TempData["checker"] = "Đăng ký";
+                return View(await listSub.ToListAsync());
+            }
+
+            TempData["notification"] = "Chưa đến hạn đăng ký";
+       
+            return View();
+
+
         }
         /*******/
         // Xem danh sách lớp học phần đã đăng ký
@@ -151,58 +181,42 @@ namespace LearnASPWithAkichan.Controllers
         // ---> hủy đăng ký(bug)
         public IActionResult deleteLHP(string idClass)
         {
-            /* string username = HttpContext.Session.GetString("username");
-             var acc = _db.Accounts.FirstOrDefault(x => x.UserName == username);
-             ClassSession clas = _db.ClassSessions.FirstOrDefault(x => x.Id == idClass);
-             //
-             var sub = _db.Subjects.FirstOrDefault(x => x.Id == clas.SubjectId);
-             var stu = _db.Students.FirstOrDefault(x => x.AccountId == acc.Id);
-             //
-             RegistClass rgclass = _db.RegistClasses.Where(x => x.StudentId == stu.Id && x.ClassSessionId == clas.Id);
-             _db.RegistClasses.Remove(rgclass);
-             clas.Amount += 1;
-             _db.ClassSessions.Update(clas);
-             _db.SaveChanges();
-             return RedirectToAction("HocPhanDaDangKy", "Home");*/
             string username = HttpContext.Session.GetString("username");
             var acc = _db.Accounts.FirstOrDefault(x => x.UserName == username);
-            var clas = _db.ClassSessions.FirstOrDefault(x => x.Id == id);
+            ClassSession clas = _db.ClassSessions.FirstOrDefault(x => x.Id == idClass);
             //
             var sub = _db.Subjects.FirstOrDefault(x => x.Id == clas.SubjectId);
             var stu = _db.Students.FirstOrDefault(x => x.AccountId == acc.Id);
             //
-            RegistClass rgclass = new RegistClass()
-            {
-                StudentId = stu.Id,
-                ClassSessionId = clas.Id,
-                Status = true,
-                RegistDate = DateTime.Now,
-                Credits = sub.Credits
-            };
+            RegistClass rgclass = _db.RegistClasses.FirstOrDefault(x => x.StudentId == stu.Id && x.ClassSessionId == clas.Id);
             _db.RegistClasses.Remove(rgclass);
+            clas.Amount += 1;
+            _db.ClassSessions.Update(clas);
             _db.SaveChanges();
             return RedirectToAction("HocPhanDaDangKy", "Home");
+
         }
-        public async Task<IActionResult> HuyDangKy(string idClass)
+
+        [HttpGet]
+        public async Task<IActionResult> HuyDangKy(string id)
         {
-            string username = HttpContext.Session.GetString("username");
-            var acc = _db.Accounts.FirstOrDefault(x => x.UserName == username);
-            var stu = _db.Students.FirstOrDefault(x => x.AccountId == acc.Id);
-            var clas = _db.ClassSessions.FirstOrDefault(x => x.Id == idClass);
-            //
-            var rgclass = _db.RegistClasses.FirstOrDefault(x => x.StudentId == stu.Id && x.ClassSessionId == clas.Id);
-            if (rgclass != null)
+            var danhSachDangKy = _db.RegistClasses.FirstOrDefault(x => x.ClassSessionId == id);
+
+            if (danhSachDangKy != null)
             {
-                _db.RegistClasses.Remove(rgclass);
-                clas.Amount = 1;
-                _db.ClassSessions.Update(clas);
-                await _db.SaveChangesAsync();
-                return RedirectToAction("HocPhanDaDangKy", "Home"); 
+                _db.RegistClasses.Remove(danhSachDangKy);
+                ClassSession updateSoLuongMonHoc = _db.ClassSessions.FirstOrDefault(x => x.Id == id);
+                updateSoLuongMonHoc.Amount += 1;
+                _db.ClassSessions.Update(updateSoLuongMonHoc);
+
+                _db.SaveChangesAsync();
             }
             else
             {
-                return RedirectToAction("HocPhanDaDangKy", "Home");
+                TempData["error"] = "Có lỗi gì đó~ Tui cũng không biết nữa? Khi nào ta yêu nhau";
             }
+            return RedirectToAction("HocPhanDaDangKy");
+
         }
         /*******/
         public async Task<IActionResult> DanhSachLop(string id)
@@ -231,14 +245,20 @@ namespace LearnASPWithAkichan.Controllers
             // ---> lớp học phần trong kế hoạch | ngoài kế hoạch
         public IActionResult ThongBao()
         {
-            var list_class_nkh = from s in _db.ClassSessions where s.CommonClass == true select s;
-            return View(list_class_nkh.ToList());
+            
+            if (trongKyDangKy && RoleCheckByHand)
+            {
+                var list_class_nkh = from s in _db.ClassSessions where s.CommonClass == true select s;
+                return View(list_class_nkh.ToList());
+            }
+            TempData["notification"] = "Chưa đến kỳ đăng ký!";
+            return View();
         }            
 
-            [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-            public IActionResult Error()
-            {
-                return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-            }   
-        } 
+        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
+        public IActionResult Error()
+        {
+            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }   
+    } 
 }

@@ -2,7 +2,7 @@
 @{
     ViewData["Title"] = "Đăng ký môn học";
     Layout = "~/Views/Shared/_Layout.cshtml";
-    
+    ViewData["Description"] = TempData["notification"];
 }
 
 @section AddToHead{
@@ -22,9 +22,9 @@
                 <div class="contentCard longCard">
                     <div class="cardContent">
                        <div class="cardMainContent">
-                            <h2></h2>
+                            <h2>@ViewData["Title"]</h2>
                             <br>
-                            <p>Nếu bạn không tìm thấy học phần nào nghĩa là chưa đến đợt đăng ký!</p>
+                            <p>@ViewData["Description"]</p>
                        </div>
 
                        <div class="cardSubContent">
@@ -39,25 +39,29 @@
 
                 </div>     
                 
-                @foreach (var item in Model)
-                {
-                    <div class="contentCard">
-                    <div class="cardContent">
-                      <div class="cardMainContent">
-                        <p>@item.Id</p>
-                        <h5>@item.Name</h5>
-                        <p>Số tín chỉ: @item.Credits</p>
-                      </div>
-                      <div class="cardSubContent">
-                      </div>
-                    </div>
-                    <div class="cardImage" id="DK">
-                      <div class="buttonAction">
-                        <a class="btn btn-outline dangKy" asp-route-id="@item.Id" asp-action="DanhSachLop" > Xem danh sách lớp</a>
-                      </div>
-                    </div>
-                  </div>
+                @{
+                    if (Model !=null){
+                        @foreach (var item in Model)
+                        {
+                            <div class="contentCard">
+                            <div class="cardContent">
+                              <div class="cardMainContent">
+                                <p>@item.Id</p>
+                                <h5>@item.Name</h5>
+                                <p>Số tín chỉ: @item.Credits</p>
+                              </div>
+                              <div class="cardSubContent">
+                              </div>
+                            </div>
+                            <div class="cardImage" id="DK">
+                              <div class="buttonAction">
+                                <a class="btn btn-outline dangKy" asp-route-id="@item.Id" asp-action="DanhSachLop" > Xem danh sách lớp</a>
+                              </div>
+                            </div>
+                          </div>
                
+                            }
+                    }
                 }
             </div>
 

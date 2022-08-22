@@ -2,6 +2,8 @@
 @{
     ViewData["Title"] = "Học phần đã đăng ký";
     Layout = "~/Views/Shared/_Layout.cshtml";
+
+    ViewData["Description"] = TempData["error"];
 }
 
 @section AddToHead{
@@ -54,7 +56,7 @@
                         <div class="cardImage">
                           <div class="buttonAction">
                               
-                            <a class="btn btn-outline dangKy" id="register-btn"  asp-action="HuyDangKy" asp-route-id="@item.ClassSessionId"  asp-controller="Home"> Huỷ đăng ký</a>
+                            <a class="btn btn-outline dangKy" id="register-btn"  asp-action="HuyDangKy" asp-route-id="@item.ClassSessionId"> Huỷ đăng ký</a>
 
                           </div>
                         </div>

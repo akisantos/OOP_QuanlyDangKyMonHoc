@@ -1,7 +1,8 @@
 ﻿@model IEnumerable<LearnASPWithAkichan.Models.ClassSession>      
 @{
-    ViewData["Title"] = "Đăng ký môn học";
+    ViewData["Title"] = "Đăng ký môn ngoài kế hoạch";
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Description"] = TempData["notification"];
 }
 
 @section AddToHead{
@@ -17,30 +18,53 @@
             
             <!-- Ghi Xuất dữ liệu ở đây-->
             <div class="contentWrapper">
-
-               
-                
-                @foreach (var item in Model)
-                {
-                   <div class="contentCard">
+                 <div class="contentCard longCard">
                     <div class="cardContent">
-                      <div class="cardMainContent">
-                        <p>Mã môn: @item.SubjectId</p>
-                        <h5>Mã lớp học phần: @item.Id</h5>
-                        <p>@item.BeginDate - @item.EndDate</p>
-                      </div>
-                      <div class="cardSubContent">
-                        <p>Số lượng: @item.Amount</p>
-                      </div>
+                       <div class="cardMainContent">
+                            <h2>@ViewData["Title"]</h2>
+                            <br>
+                            <p>@ViewData["Description"]</p>
+                       </div>
+
+                       <div class="cardSubContent">
+                            
+
+                       </div>
                     </div>
+
                     <div class="cardImage">
-                      <div class="buttonAction">
-                        <a  class="btn btn-outline dangKy" asp-action="add" asp-controller="Home" asp-route-id="@item.Id" id="register-btn" disabled tabindex="-1">Đăng ký </a>
-                      </div>
+                        <img src="~/css/images/man-with-laptop-light.png" alt="ThongBao" srcset="">
                     </div>
-                  </div>
+
+                </div>   
+                @{
+                    if (Model != null)
+                    {
+                         @foreach (var item in Model)
+                            {
+                               <div class="contentCard">
+                                <div class="cardContent">
+                                  <div class="cardMainContent">
+                                    <p>Mã môn: @item.SubjectId</p>
+                                    <h5>Mã lớp học phần: @item.Id</h5>
+                                    <p>@item.BeginDate - @item.EndDate</p>
+                                  </div>
+                                  <div class="cardSubContent">
+                                    <p>Số lượng: @item.Amount</p>
+                                  </div>
+                                </div>
+                                <div class="cardImage">
+                                  <div class="buttonAction">
+                                    <a  class="btn btn-outline dangKy" asp-action="add" asp-controller="Home" asp-route-id="@item.Id" id="register-btn" disabled tabindex="-1">Đăng ký </a>
+                                  </div>
+                                </div>
+                              </div>
                
+                            }
+                    }
                 }
+                
+               
             </div>
 
 
