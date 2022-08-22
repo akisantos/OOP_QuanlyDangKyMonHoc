@@ -29,6 +29,7 @@ namespace LearnASPWithAkichan.Controllers
             string username = HttpContext.Session.GetString("username");
             var acc = _db.Accounts.FirstOrDefault(x => x.UserName == username);
             var stu = _db.Students.FirstOrDefault(x => x.AccountId == acc.Id);
+            HttpContext.Session.SetString("studentID", stu.Id);
             //
             var k = _db.Departments.FirstOrDefault(x => x.Id == stu.DepartmentId);
             var sub = _db.Subjects.FirstOrDefault(x => x.DepartmentId == stu.DepartmentId);
@@ -51,11 +52,11 @@ namespace LearnASPWithAkichan.Controllers
             return View(await regTest.ToListAsync());
         }
         //Đăng ký lớp học phần 
-        public IActionResult add(string id)
+        public async Task<IActionResult> add(string id)
         {
             string username = HttpContext.Session.GetString("username");
             var acc = _db.Accounts.FirstOrDefault(x => x.UserName == username);
-            var clas = _db.ClassSessions.FirstOrDefault(x => x.Id == id);
+            ClassSession clas = _db.ClassSessions.FirstOrDefault(x => x.Id == id);
             //
             var sub = _db.Subjects.FirstOrDefault(x => x.Id == clas.SubjectId);
             var stu = _db.Students.FirstOrDefault(x => x.AccountId == acc.Id);
@@ -71,11 +72,14 @@ namespace LearnASPWithAkichan.Controllers
                     Credits = sub.Credits
                 };
                 _db.RegistClasses.Add(rgclass);
-                _db.SaveChanges();
+                clas.Amount -= 1;
+                _db.ClassSessions.Update(clas);
+                await _db.SaveChangesAsync();
                 return RedirectToAction("HocPhanDaDangKy", "Home");
             }
             else
             {
+                ViewData["Description"] = "Đã đăng ký hết !!!!";
                 return RedirectToAction("DanhSachLop", "Home");
             }
             
@@ -98,20 +102,64 @@ namespace LearnASPWithAkichan.Controllers
             else
                 return true;
         }
-        // ---> lớp học phần trong kế hoạch | ngoài kế hoạch
-        // ---> check môn tuyên quyết
-        // ---> hủy đăng ký
-        /*******/
-        public async Task<IActionResult> DanhSachLop(String id)
+        // ---> check môn tuyên quyết(ch xong)
+        public bool checkSub(string id)
         {
-            var list = from cla in _db.ClassSessions where cla.SubjectId == id select cla;
-            return View(await list.ToListAsync());
-            
+            return true;
+        }
+        // ---> hủy đăng ký(bug)
+        public IActionResult deleteLHP(string id)
+        {
+            string username = HttpContext.Session.GetString("username");
+            var acc = _db.Accounts.FirstOrDefault(x => x.UserName == username);
+            var clas = _db.ClassSessions.FirstOrDefault(x => x.Id == id);
+            //
+            var sub = _db.Subjects.FirstOrDefault(x => x.Id == clas.SubjectId);
+            var stu = _db.Students.FirstOrDefault(x => x.AccountId == acc.Id);
+
+
+            //
+            RegistClass rgclass = new RegistClass()
+            {
+                StudentId = stu.Id,
+                ClassSessionId = clas.Id,
+                Status = true,
+                RegistDate = DateTime.Now,
+                Credits = sub.Credits
+            };
+            _db.RegistClasses.Remove(rgclass);
+            _db.SaveChanges();
+            return RedirectToAction("HocPhanDaDangKy","Home");
+        }
+        /*******/
+        public async Task<IActionResult> DanhSachLop(string id)
+        {
+            string stuID = HttpContext.Session.GetString("studentID");
+            List<RegistClass> lopDaDangKy = await _db.RegistClasses.Where(x => x.StudentId == stuID).ToListAsync();
+            List<ClassSession> list = await _db.ClassSessions.Where(x => x.SubjectId == id ).ToListAsync();
+            foreach (var item in list.ToList())
+            {
+                foreach (var item2 in lopDaDangKy.ToList())
+                {
+                    if (item2.ClassSessionId == item.Id)
+                    {
+
+                        list.Remove(item);
+                    }
+                }
+               
+            }
+            if (list.Count() == 0)
+            {
+                ViewData["Description"] = "Đã đăng ký hết !!!!! ";
+            }
+            return View(list);
         } 
          
+        // ---> lớp học phần trong kế hoạch | ngoài kế hoạch
         public IActionResult ThongBao()
-        { 
-            return View();
+        {
+           return View();
         }
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
