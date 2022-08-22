@@ -12,6 +12,11 @@ namespace LearnASPWithAkichan.Controllers
 {
     public class AdminController : Controller
     {
+
+        string folder = @"D:\";
+        string fileName = "CacKyDK.txt";
+
+
         private readonly regist_courseContext _context;
         public AdminController(regist_courseContext context)
         {
@@ -21,7 +26,44 @@ namespace LearnASPWithAkichan.Controllers
         [Route("/Admin")]
         public IActionResult QuanLyKyDK()
         {
+            string fullPath = folder + fileName;
+
+            string[] readText = System.IO.File.ReadAllLines(fullPath);
+            List<KyDangKy> kyDangKyLst = new List<KyDangKy>();
+
+            for (int i = 0; i < readText.Length; i++)
+            {
+                string[] splittedDate = readText[i].Split('-', StringSplitOptions.None);
+
+                KyDangKy kdk = new KyDangKy();
+                kdk.BeginDate = DateTime.Parse(splittedDate[0]);
+                kdk.EndDate = DateTime.Parse(splittedDate[1]);
+                kyDangKyLst.Add(kdk);
+
+            }
+           
+            return View(kyDangKyLst);
+        }
+
+
+        public IActionResult ThemKyDangKy()
+        {
             return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> TaoKyDangKy([Bind("BeginDate,EndDate")] KyDangKy kyDangKy)
+        {
+            if (kyDangKy != null)
+            {
+                string fullPath = folder + fileName;
+                await using (StreamWriter writer = new StreamWriter(fullPath, true))
+                {
+                    writer.WriteLine(kyDangKy.BeginDate +"-"+ kyDangKy.EndDate);
+                }
+                return RedirectToAction(nameof(QuanLyKyDK));
+            }
+            TempData["notification"] = "Vô lý";
+            return View("ThemKyDangKy");
         }
 
         //Quản lý môn học
@@ -38,17 +80,19 @@ namespace LearnASPWithAkichan.Controllers
         }
 
         // Return View chỉnh sửa môn học.
-        public IActionResult ChinhSuaMonHoc(string id)
+/*        public IActionResult ChinhSuaMonHoc(string id)
         {
             var subject = _context.Subjects.FirstOrDefault(x => x.Id == id);
             var department = _context.Departments.FirstOrDefault(x => x.Id == subject.DepartmentId);
+            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Id", subject.DepartmentId);
             if (subject != null)
             {
-                TempData["department_name"] = department.Name;
+
                 return View(subject);
             }
+            TempData["notification"] = "Lỗi!";
             return View();
-        }
+        }*/
 
         // Trả về giao diện quản lý học lớp học phần
         public async Task<IActionResult> QuanLyLopHocPhan()
@@ -91,7 +135,7 @@ namespace LearnASPWithAkichan.Controllers
             };
             _context.ClassSessions.Add(class_sesion);
             await _context.SaveChangesAsync();
-            return View(nameof(QuanLyLopHocPhan));
+            return View("QuanLyLopHocPhan");
 
         }
 
@@ -113,7 +157,7 @@ namespace LearnASPWithAkichan.Controllers
         // tạo môn học
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> CreateSubject([Bind("Id,Name,Credits,Department")] Subject subject)
+        public async Task<IActionResult> CreateSubject([Bind("Id,Name,Credits,DepartmentId")] Subject subject)
         {
             if (ModelState.IsValid)
             {
@@ -133,8 +177,8 @@ namespace LearnASPWithAkichan.Controllers
             return View(subject);
         }
 
-        // tạo môn học
-        [HttpGet]
+        // edit môn học
+        /*[HttpGet]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(string id)
         {
@@ -158,6 +202,109 @@ namespace LearnASPWithAkichan.Controllers
             }
             TempData["notification"] = "Có sự cố, vui lòng quay lại sau";
             return View();
+        }*/
+
+        public async Task<IActionResult> EditMonHoc(string id)
+        {
+            if (id == null || _context.Subjects == null)
+            {
+                return NotFound();
+            }
+
+            var subject = await _context.Subjects.FindAsync(id);
+            if (subject == null)
+            {
+                return NotFound();
+            }
+            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Id", subject.DepartmentId);
+            return View("ChinhSuaMonHoc", subject);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditMonHoc(string id, [Bind("Id,Name,Credits,DepartmentId")] Subject subject)
+        {
+            if (id != subject.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(subject);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!SubjectExists(subject.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction("QuanLyMonHoc");
+            }
+            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Id", subject.DepartmentId);
+            return View("ChinhSuaMonHoc", subject);
+            
+        }
+
+        // Edit lớp học phần
+        public async Task<IActionResult> EditLHP(string id)
+        {
+            if (id == null || _context.ClassSessions == null)
+            {
+                return NotFound();
+            }
+
+            var classSession = await _context.ClassSessions.FindAsync(id);
+            if (classSession == null)
+            {
+                return NotFound();
+            }
+            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Id", classSession.DepartmentId);
+            ViewData["SubjectId"] = new SelectList(_context.Subjects, "Id", "Id", classSession.SubjectId);
+            return View("ChinhSuaLopHocPhan", classSession);
+        }
+
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditLHP(string id, [Bind("Id,Amount,PointClass,PointMid,PointEnd,Active,BeginDate,EndDate,CommonClass,DepartmentId,SubjectId")] ClassSession classSession)
+        {
+            if (id != classSession.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    _context.Update(classSession);
+                    await _context.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ClassSessionExists(classSession.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Id", classSession.DepartmentId);
+            ViewData["SubjectId"] = new SelectList(_context.Subjects, "Id", "Id", classSession.SubjectId);
+            return View(classSession);
         }
 
 
@@ -169,6 +316,75 @@ namespace LearnASPWithAkichan.Controllers
             return (_context.Subjects.Any(e => e.Id == id));
         }
 
+        private bool SubjectExists(string id)
+        {
+            return (_context.Subjects?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
 
+        public async Task<IActionResult> TimKiemMonHoc(string timKiemString)
+        {
+
+            if (!String.IsNullOrEmpty(timKiemString))
+            {
+                var regist_courseContext = _context.Subjects.Include(s => s.Department);
+                var monHocTheoId = regist_courseContext.Where(s => s.Id.Contains(timKiemString));
+                var monHocTheoTen = regist_courseContext.Where(s => s.Name.Contains(timKiemString));
+                var monHocKhoa = regist_courseContext.Where(s => s.Department.Id.Contains(timKiemString));
+
+                if (monHocTheoId.Count() > monHocTheoTen.Count() && monHocTheoId.Count() > monHocKhoa.Count())
+                {
+                    TempData["inputSearchValue"] = timKiemString;
+                    return View("QuanLyMonHoc", await monHocTheoId.ToListAsync());
+
+                } else if (monHocTheoTen.Count() > monHocTheoId.Count() && monHocTheoId.Count() > monHocKhoa.Count())
+                {
+                    TempData["inputSearchValue"] = timKiemString;
+                    return View("QuanLyMonHoc", await monHocTheoTen.ToListAsync());
+                }
+                else
+                {
+                    TempData["inputSearchValue"] = timKiemString;
+                    return View("QuanLyMonHoc", await monHocKhoa.ToListAsync());
+                }
+    
+                
+            }
+            var regist_courseContext2 = _context.Subjects.Include(s => s.Department);
+            return View("QuanLyMonHoc", await regist_courseContext2.ToListAsync());
+        }
+
+        public async Task<IActionResult> TimKiemLopHocPhan(string timKiemString)
+        {
+
+            if (!String.IsNullOrEmpty(timKiemString))
+            {
+                var regist_courseContext = _context.ClassSessions.Include(s => s.Department).Include(s => s.Subject);
+                var monHocTheoId = regist_courseContext.Where(s => s.Id.Contains(timKiemString));
+                var monHocKhoa = regist_courseContext.Where(s => s.Department.Name.Contains(timKiemString));
+
+                if (monHocTheoId.Count() > monHocKhoa.Count())
+                {
+                    TempData["inputSearchValue"] = timKiemString;
+                    return View("QuanLyLopHocPhan", await monHocTheoId.ToListAsync());
+
+                }
+                else
+                {
+                    TempData["inputSearchValue"] = timKiemString;
+                    return View("QuanLyLopHocPhan", await monHocKhoa.ToListAsync());
+                }
+
+
+            }
+            var regist_courseContext2 = _context.ClassSessions.Include(s => s.Department).Include(s => s.Subject);
+            return View("QuanLyLopHocPhan", await regist_courseContext2.ToListAsync());
+        }
+
+        private bool ClassSessionExists(string id)
+        {
+            return (_context.ClassSessions?.Any(e => e.Id == id)).GetValueOrDefault();
+        }
     }
+
+  
 }

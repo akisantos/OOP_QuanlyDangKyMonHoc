@@ -1,7 +1,8 @@
 ﻿@model LearnASPWithAkichan.Models.ClassSession
 
 @{
-    ViewData["Title"] = "TaoLopLopHocPhan";
+    ViewData["Title"] = "Tạo lớp học phần mới";
+
     Layout = "";
 }
 
@@ -28,7 +29,7 @@
             </div>
             <div class=" box-2 d-flex flex-column h-100" style="overflow-y: auto !important; max-height: 80vh !important;">
                 <div class="mt-5">
-                    <p class="mb-1 h-1">Chỉnh sửa tên môn học</p>
+                    <p class="mb-1 h-1">@ViewData["Title"]</p>
                     <p class="text-muted mb-2"></p>
                     <div class="d-flex flex-column login-box ">
                         <form asp-controller="Admin" asp-action="create_class_session" id="formSub" method="post">
@@ -52,25 +53,25 @@
                                 <input asp-for="Active" class="form-control" value="true"/>
                                 <span asp-validation-for="Active" class="text-danger"></span>
                             </div>
-@*                            <div class="user-box">
+                            <div class="user-box">
                                 <label asp-for="PointClass" class="control-label"></label>
                                 <br /> <br />
-                                <input asp-for="PointClass" class="form-control" />
+                                <input asp-for="PointClass" class="form-control" hidden/>
                                 <span asp-validation-for="PointClass" class="text-danger"></span>
                             </div>
                             <div class="user-box">
                                 <label asp-for="PointMid" class="control-label"></label>
                                  <br /> <br />
-                                <input asp-for="PointMid" class="form-control" />
+                                <input asp-for="PointMid" class="form-control" hidden />
                                 <span asp-validation-for="PointMid" class="text-danger"></span>
                             </div>
 
                              <div class="user-box">
                                 <label asp-for="PointEnd" class="control-label"></label>
                                 <br /> <br />
-                                <input asp-for="PointEnd" class="form-control" />
+                                <input asp-for="PointEnd" class="form-control" hidden />
                                 <span asp-validation-for="PointEnd" class="text-danger"></span>
-                            </div>*@
+                            </div>
 
                              <div class="user-box">
                                 <label asp-for="BeginDate" class="control-label"></label>
@@ -119,7 +120,7 @@
                               Tạo
                             </a>
 
-                            <a asp-action="QuanLyMonHoc">
+                            <a asp-action="QuanLyLopHocPhan">
                                 <span></span>
                                 <span></span>
                                 <span></span>

@@ -1,6 +1,7 @@
-﻿@model IEnumerable<LearnASPWithAkichan.Models.Subject>
+﻿@model List<LearnASPWithAkichan.Models.KyDangKy>
 @{
     ViewData["Title"] = "Quản lý kỳ đăng ký";
+    ViewData["Description"] = "Thêm, chỉnh sửa kỳ đăng ký";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 @section AddToHead{
@@ -9,24 +10,22 @@
 
 <div class="filter">
                 <ul>
-@*                    <li class="btn btn-outline btnActive" id="theo-ke-hoach-btn">Tạo môn học</li>
-                    <li class="btn btn-outline" id="ngoai-ke-hoach-btn">Ngoài kế hoạch</li>*@
+                    <li class="btn btn-outline"><i class="fa fa-plus" aria-hidden="true"></i> <a asp-action="ThemKyDangKy" style="text-decoration:none !important;"> Thêm kỳ đăng ký</a></li>
                 </ul>
             </div>
 
             <!-- Ghi Xuất dữ liệu ở đây-->
             <div class="contentWrapper">
-                              <div class="contentCard longCard">
+                <div class="contentCard longCard">
                     <div class="cardContent">
                        <div class="cardMainContent">
                             <h2>@ViewData["Title"]</h2>
                             <br>
-                            <p>Nếu bạn không tìm thấy học phần nào nghĩa là chưa đến đợt đăng ký!</p>
+                            <p>@ViewData["Description"]</p>
                        </div>
 
                        <div class="cardSubContent">
-                            
-
+                           
                        </div>
                     </div>
 
@@ -37,26 +36,27 @@
                 </div>      
                 
 
-                <div class="contentCard">
-                    <div class="cardContent">
-                      <div class="cardMainContent">
-                        <p>Kỳ đăng ký : i</p>
-                        <h5>Thời gian ở đây</h5>
-                        <p></p>
-                      </div>
-                      <div class="cardSubContent">
-                        <p>Chú ý gì đó</p>
-                      </div>
+                @foreach (var item in Model)
+                {
+                    <div class="contentCard">
+                        <div class="cardContent">
+                            <div class="cardMainContent">
+                              
+                                <h5>@item.BeginDate - @item.BeginDate<h5>
+                                
+                            </div>
+                            <div class="cardSubContent">
+                               
+                            </div>
+                        </div>
+                        <div class="cardImage">
+                            <div class="buttonAction">
+                                <a class="btn btn-outline dangKy" > Chỉnh sửa</a>
+                            </div>
+                        </div>
                     </div>
-                    <div class="cardImage">
-                      <div class="buttonAction">
-                        <a href="#" class="btn btn-outline dangKy" id="register-btn" > Chỉnh sửa</a>
-                       @* <a href="#" class="btn btn-outline"> Đánh dấu</a>*@
-                      </div>
-                    </div>
-                  </div>
-                </div>
-  
+                }
+                
                 
             </div>
         </div>
