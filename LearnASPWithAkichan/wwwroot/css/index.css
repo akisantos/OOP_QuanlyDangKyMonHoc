@@ -504,6 +504,20 @@ body {
     flex-direction: row;
 }
 
+.xoaBtn {
+    color: #696cff !important;
+    border-color: #ff0000 !important;
+    background: transparent;
+    text-decoration: none;
+}
+
+.xoaBtn:hover {
+    color: #fff !important;
+    background-color: #696cff !important;
+    border-color: #696cff !important;
+    box-shadow: 0 0.125rem 0.25rem 0 rgb(105 108 255 / 40%);
+}
+
 .input-box .user-box {
     position: relative;
     margin-left:1rem;

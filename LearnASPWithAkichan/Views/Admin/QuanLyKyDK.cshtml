@@ -42,7 +42,11 @@
                         <div class="cardContent">
                             <div class="cardMainContent">
                               
-                                <h5>@item.BeginDate - @item.BeginDate<h5>
+                                <form asp-action="XoaKyDangKy" id="kyDangKyForm">
+                                        <h5>@item.BeginDate - @item.EndDate<h5>
+                                         <input type="hidden" name="BeginDate" value="@item.BeginDate"/>
+                                         <input type="hidden" name="EndDate" value="@item.EndDate"/>
+                                </form>
                                 
                             </div>
                             <div class="cardSubContent">
@@ -51,7 +55,7 @@
                         </div>
                         <div class="cardImage">
                             <div class="buttonAction">
-                                <a class="btn btn-outline dangKy" > Chỉnh sửa</a>
+                                <a class="btn btn-outline" onclick="document.getElementById('kyDangKyForm').submit();" >Xoá</a>
                             </div>
                         </div>
                     </div>
@@ -61,6 +65,8 @@
             </div>
         </div>
     </div>
+
+    
     <script>
         $(".menu li:nth-child(1)").addClass("active");
     </script>

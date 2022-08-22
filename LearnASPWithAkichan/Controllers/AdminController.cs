@@ -13,7 +13,7 @@ namespace LearnASPWithAkichan.Controllers
     public class AdminController : Controller
     {
 
-        string folder = @"D:\";
+        string folder = Environment.CurrentDirectory.ToString()+"/"; 
         string fileName = "CacKyDK.txt";
 
 
@@ -50,10 +50,11 @@ namespace LearnASPWithAkichan.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> TaoKyDangKy([Bind("BeginDate,EndDate")] KyDangKy kyDangKy)
         {
-            if (kyDangKy != null)
+            if (kyDangKy != null && DateTime.Compare(kyDangKy.BeginDate, kyDangKy.EndDate) <0)
             {
                 string fullPath = folder + fileName;
                 await using (StreamWriter writer = new StreamWriter(fullPath, true))
@@ -62,8 +63,48 @@ namespace LearnASPWithAkichan.Controllers
                 }
                 return RedirectToAction(nameof(QuanLyKyDK));
             }
-            TempData["notification"] = "Vô lý";
+            TempData["notification"] = "Vô lý! ";
             return View("ThemKyDangKy");
+        }
+
+        [HttpPost]
+        public IActionResult XoaKyDangKy(KyDangKy kyDangKy)
+        {
+            string fullPath = folder + fileName;
+
+            string[] readText = System.IO.File.ReadAllLines(fullPath);
+            List<KyDangKy> kyDangKyLst = new List<KyDangKy>();
+
+            for (int i = 0; i < readText.Length; i++)
+            {
+                string[] splittedDate = readText[i].Split('-', StringSplitOptions.None);
+
+                KyDangKy kdk = new KyDangKy();
+                kdk.BeginDate = DateTime.Parse(splittedDate[0]);
+                kdk.EndDate = DateTime.Parse(splittedDate[1]);
+                kyDangKyLst.Add(kdk);
+            }
+
+            int j = 0;
+            foreach (KyDangKy item in kyDangKyLst)
+            {
+
+                if (item.BeginDate == kyDangKy.BeginDate && item.EndDate == kyDangKy.EndDate)
+                {
+                    
+
+                    var tempFile = Path.GetTempFileName();
+                    var linesToKeep = System.IO.File.ReadLines(fullPath).Where(l => l != readText[j]);
+                    System.IO.File.WriteAllLines(tempFile, linesToKeep);
+                    System.IO.File.Delete(fullPath);
+                    System.IO.File.Move(tempFile, fullPath);
+                    kyDangKyLst.Remove(item);
+                    break;
+                }
+                j++;   
+            }
+
+            return View("QuanLyKyDK",kyDangKyLst);
         }
 
         //Quản lý môn học
@@ -80,19 +121,7 @@ namespace LearnASPWithAkichan.Controllers
         }
 
         // Return View chỉnh sửa môn học.
-/*        public IActionResult ChinhSuaMonHoc(string id)
-        {
-            var subject = _context.Subjects.FirstOrDefault(x => x.Id == id);
-            var department = _context.Departments.FirstOrDefault(x => x.Id == subject.DepartmentId);
-            ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Id", subject.DepartmentId);
-            if (subject != null)
-            {
 
-                return View(subject);
-            }
-            TempData["notification"] = "Lỗi!";
-            return View();
-        }*/
 
         // Trả về giao diện quản lý học lớp học phần
         public async Task<IActionResult> QuanLyLopHocPhan()
@@ -178,31 +207,7 @@ namespace LearnASPWithAkichan.Controllers
         }
 
         // edit môn học
-        /*[HttpGet]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(string id)
-        {
-            if (ModelState.IsValid)
-            {
-                var subject = _context.Subjects.FirstOrDefault(x => x.Id == id);
-                if (subject == null)
-                {
-                    TempData["notification"] = "Cập nhật thất bại";
-                    return View("TaoMonHoc");
-
-                }
-                else
-                {
-                    subject.Name = Request.Form["Name"];
-                    subject.Credits = int.Parse(Request.Form["Credits"]);
-                    _context.Update(subject);
-                    await _context.SaveChangesAsync();
-                    return View(subject);
-                }
-            }
-            TempData["notification"] = "Có sự cố, vui lòng quay lại sau";
-            return View();
-        }*/
+    
 
         public async Task<IActionResult> EditMonHoc(string id)
         {
