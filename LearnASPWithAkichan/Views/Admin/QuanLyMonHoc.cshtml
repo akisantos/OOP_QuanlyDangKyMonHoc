@@ -2,6 +2,7 @@
 
 @{
     ViewData["Title"] = "Quản lý môn học";
+    ViewData["Description"] = "Thêm, tìm kiếm các môn học.";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 @section AddToHead{
@@ -10,7 +11,18 @@
 
 <div class="filter">
                 <ul>
-                    <li class="btn btn-outline"><i class="fa fa-plus" aria-hidden="true"></i> <a asp-action="TaoMonHoc"> Tạo môn học</a></li>
+                    <li class="btn btn-outline"><i class="fa fa-plus" aria-hidden="true"></i> <a asp-action="TaoMonHoc" style="text-decoration:none !important;"> Tạo môn học</a></li>
+                    <li class="input-box">
+
+                            <div class="user-box" style="width: 100%;">
+                                <form class="user-box" asp-action="TimKiemMonHoc" id="searchForm">
+                                    <input type="text" name="timKiemString" required="" id="searchbar" placeholder="" value="@TempData["inputSearchValue"]">
+                                    <label>Tìm kiếm <i class="fa fa-search" aria-hidden="true"></i></label>
+
+                                </form>
+                            </div>
+             
+                        </li>
                 </ul>
             </div>
 
@@ -21,7 +33,7 @@
                        <div class="cardMainContent">
                             <h2> @ViewData["Title"]</h2>
                             <br>
-                            <p>Nếu bạn không tìm thấy học phần nào nghĩa là chưa đến đợt đăng ký!</p>
+                            <p>@ViewData["Description"]</p>
                        </div>
 
                        <div class="cardSubContent">
@@ -33,21 +45,19 @@
                     <div class="cardImage">
                         <img src="~/css/images/man-with-laptop-light.png" alt="ThongBao" srcset="">
                     </div>
-                </div>      
+                </div>  
                 
-
-
-                @foreach (var item in Model)
+               @foreach (var item in Model)
                     {
                     <div class="contentCard">
                         <div class="cardContent">
                                 <div class="cardMainContent">
-                                    <p>@Html.DisplayFor(modelItem => item.Id)</p>
-                                    <h5>@Html.DisplayFor(modelItem => item.Name)</h5>
-                                    <p>@Html.DisplayFor(modelItem => item.Credits)</p>
+                                    <p>Mã môn học: @Html.DisplayFor(modelItem => item.Id)</p>
+                                    <h5>Tên môn học: @Html.DisplayFor(modelItem => item.Name)</h5>
+                                    <p>Tín chỉ: @Html.DisplayFor(modelItem => item.Credits)</p>
                                 </div>
                                 <div class="cardSubContent">
-                                     <p>@Html.DisplayFor(modelItem => item.Department.Id)</p>
+                                     <p>Thuộc khoa: @Html.DisplayFor(modelItem => item.Department.Name)</p>
                                 </div>
                         </div>
                         <div class="cardImage">
@@ -56,14 +66,26 @@
                           </div>
                         </div>
                   </div>
-
-                }
+                
 }               
             </div>
         </div>
     </div>
     
+    
+
+
+    @section Scripts{
     <script src="~/js/index.js"></script>
     <script>
         $(".menu li:nth-child(2)").addClass("active");
+       $('#searchbar').on('input', function() { 
+            $('#searchbar').keypress(function(event){
+            if(event.keyCode == 13){
+               $("#searchForm").submit();
+                }
+            });
+        });
+
     </script>
+    }

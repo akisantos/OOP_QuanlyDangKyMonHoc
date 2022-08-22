@@ -1,7 +1,6 @@
-﻿@model LearnASPWithAkichan.Models.Subject
-
+﻿@model LearnASPWithAkichan.Models.KyDangKy
 @{
-    ViewData["Title"] = "Chỉnh sửa môn học";
+    ViewData["Title"] = "Thêm kỳ đăng ký";
     Layout = "";
 }
 
@@ -31,30 +30,18 @@
                     <p class="mb-1 h-1">@ViewData["Title"]</p>
                     <p class="text-muted mb-2"></p>
                     <div class="d-flex flex-column login-box ">
-                        <form asp-controller="Admin" asp-action="Edit" id="formSub">
-                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                        <form asp-controller="Admin" asp-action="TaoKyDangKy" id="formSub" >
                             <div class="user-box">
-                                <label asp-for="Id" class="control-label"></label>
-                                <br /> <br />
-                                <input asp-for="Id" class="form-control" disabled  />
-                                <span asp-validation-for="Id" class="text-danger"></span>
+                              <label>Thời gian bắt đầu</label>
+                              <br /> <br />
+                              <input type="datetime-local" required="" name="beginDate" asp-for="BeginDate" id="beginTime">
+                              
+       
                             </div>
                             <div class="user-box">
-                                <label asp-for="Name" class="control-label"></label>
-                                <br /> <br />
-                                <input asp-for="Name" class="form-control" />
-                                <span asp-validation-for="Name" class="text-danger"></span>
-                            </div>
-                            <div class="user-box">
-                                <label asp-for="Credits" class="control-label"></label>
-                                <br /> <br />
-                                <input asp-for="Credits" class="form-control" />
-                                <span asp-validation-for="Credits" class="text-danger"></span>
-                            </div>
-                            <div class="user-box">
-                                <label asp-for="DepartmentId" class="control-label"></label>
-                                <br /> <br />
-                                <select asp-for="DepartmentId" class ="form-control" asp-items="ViewBag.DepartmentId" style="min-height: 5rem" disabled></select>
+                              <label>Thời gian kết thúc</label>
+                              <br /> <br />
+                              <input type="datetime-local" name="endDate" asp-for="EndDate" required="" id="endTime">    
                             </div>
 
                             <a type="Submit" id="Submit" href="javascript:$('#formSub').submit();">
@@ -65,7 +52,7 @@
                               Tạo
                             </a>
 
-                            <a asp-action="QuanLyMonHoc">
+                            <a asp-action="QuanLyKyDK">
                                 <span></span>
                                 <span></span>
                                 <span></span>
@@ -90,6 +77,10 @@
         
         </div>
     </div>
+
+
 </body>
 </html>
+
+
 

@@ -311,13 +311,13 @@ body {
             width: auto;
         }
 
-
 .btn.btnActive {
     color: rgb(255, 255, 255) !important;
     background-color: #5f61e6 !important;
     border-color: #5f61e6 !important;
     box-shadow: 0 0.125rem 0.25rem 0 rgb(105 108 255 / 40%) !important;
 }
+
 
 /* Page content */
 .contentWrapper {
@@ -435,14 +435,24 @@ body {
     color: #696cff !important;
     border-color: #696cff !important;
     background: transparent;
+    text-decoration: none;
 }
 
-    .btn-outline:hover {
-        color: #fff !important;
-        background-color: #5f61e6;
-        border-color: #5f61e6;
-        box-shadow: 0 0.125rem 0.25rem 0 rgb(105 108 255 / 40%);
-    }
+.btn-outline:hover {
+    color: #fff !important;
+    background-color: #5f61e6;
+    border-color: #5f61e6;
+    box-shadow: 0 0.125rem 0.25rem 0 rgb(105 108 255 / 40%);
+}
+
+.btn-outline:hover ~ a {
+    color: #fff !important;
+}
+
+.filter-link {
+    color: #fff !important;
+    text-decoration: none !important;
+}
 
 .longCard {
     width: 97.5% !important;
@@ -494,6 +504,45 @@ body {
     flex-direction: row;
 }
 
+.input-box .user-box {
+    position: relative;
+    margin-left:1rem;
+
+}
+
+    .input-box .user-box input {
+        width: 100%;
+        padding: 0.4rem 0;
+        font-size: 1rem;
+        border: none;
+        border-bottom: 0.1rem solid rgba(0, 0, 0, 0);
+        outline: none;
+        background: transparent;
+        transition: .5s;
+        color: #5f61e6;
+    }
+
+        .input-box .user-box input:focus {
+            border-bottom: 0.1rem solid rgba(0, 0, 0, 0.077);
+        }
+
+    .input-box .user-box label {
+        position: absolute;
+        top: -0.2rem;
+        left: 0;
+        padding: 10px 0;
+        font-size: 16px;
+        pointer-events: none;
+        transition: .5s;
+        color: #5f61e6;
+    }
+
+    .input-box .user-box input:focus ~ label,
+    .input-box .user-box input:valid ~ label {
+        top: -0.8rem; 
+        color: #8e9baa;
+        font-size: 10px;
+    }
 
 @keyframes modalPopUp {
     0% {
