@@ -333,15 +333,42 @@ namespace LearnASPWithAkichan.Controllers
                 {
                     return NotFound();
                 }
-                ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Id", classSession.DepartmentId);
-                ViewData["SubjectId"] = new SelectList(_context.Subjects, "Id", "Id", classSession.SubjectId);
+                ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name", classSession.DepartmentId);
+                ViewData["SubjectId"] = new SelectList(_context.Subjects, "Id", "Name", classSession.SubjectId);
                 return View("ChinhSuaLopHocPhan", classSession);
             }
 
             return RedirectToAction("Index", "Home");
         }
 
-        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditMonHocHelper(string id, [Bind("Id,Name,Credits,DepartmentId")] Subject subject)
+        {
+
+            if (!RoleCheckByHand)
+            {
+                if (id == null || _context.ClassSessions == null)
+                {
+                    return NotFound();
+                }
+
+                var classSession = await _context.ClassSessions.FindAsync(id);
+                if (classSession == null)
+                {
+                    return NotFound();
+                }
+                ViewData["DepartmentId"] = new SelectList(_context.Departments, "Id", "Name", subject.DepartmentId);
+                ViewData["SubjectId"] = new SelectList(_context.Subjects.Where(x => x.DepartmentId == subject.DepartmentId), "Id", "Name", classSession.SubjectId);
+                return View("ChinhSuaLopHocPhan", classSession);
+            }
+
+            return RedirectToAction("Index", "Home");
+        }
+
+
+
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditLHP(string id, [Bind("Id,Amount,PointClass,PointMid,PointEnd,Active,BeginDate,EndDate,CommonClass,DepartmentId,SubjectId")] ClassSession classSession)

@@ -1,35 +1,135 @@
-﻿@model LearnASPWithAkichan.Models.KyDangKy
+﻿@model LearnASPWithAkichan.Models.ClassSession
 
-   <!--Modal: modalConfirmDelete-->
-    <div class="modal fade" id="modalConfirmDelete" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-      aria-hidden="true">
-      <div class="modal-dialog modal-sm modal-notify modal-danger" role="document">
-        <!--Content-->
-        <div class="modal-content text-center">
-          <!--Header-->
-          <div class="modal-header d-flex justify-content-center">
-            <p class="heading">Xác nhận xoá kỳ này? </p>
-          </div>
+@{
+    ViewData["Title"] = "Chỉnh sửa lớp học phần";
+    ViewData["Description"] = "Thêm, tìm kiếm các môn học.";
+    Layout = "";
+}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng ký môn học</title>
 
-          <!--Body-->
-          <div class="modal-body">
+    <!--Import packages-->
+    <link rel="stylesheet" href="~/css/login.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <div class="body d-md-flex h-100 d-flex align-items-center justify-content-center formBox" style="width:60vw; top:0 !important; margin-top: 0 !important;">
+            <div class="box-1 mt-md-0 mt-5">
+                <img src="https://images.unsplash.com/photo-1535083252457-6080fe29be45?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=687&q=80"
+                    class="" alt="">
+            </div>
+            <div class=" box-2 d-flex flex-column h-100">
+                <div class="mt-5">
+                    <p class="mb-1 h-1">@ViewData["Title"]</p>
+                    <p class="text-muted mb-2"></p>
+                    <div class="d-flex flex-column login-box " style="overflow-y:auto !important; max-height:60vh">
+                        <form asp-controller="Admin" asp-action="EditLHP" id="formSub" >
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                            <input type="hidden" asp-for="Id" />
+                            <div class="user-box">
+                                <label asp-for="Amount" class="control-label"></label>
+                                <br /> <br />
+                                <input asp-for="Amount" class="form-control" />
+                                <span asp-validation-for="Amount" class="text-danger"></span>
+                            </div>
+                            <div class="user-box">
+                                <label asp-for="PointClass" class="control-label"></label>
+                                <br /> <br />
+                                <input asp-for="PointClass" class="form-control" type="hidden" />
+                                <span asp-validation-for="PointClass" class="text-danger"></span>
+                            </div>
+                            <div class="user-box">
+                                <label asp-for="PointMid" class="control-label"></label>
+                                <br /> <br />
+                                <input asp-for="PointMid" class="form-control" type="hidden" />
+                                <span asp-validation-for="PointMid" class="text-danger"></span>
+                            </div>
+                            <div class="user-box">
+                                <label asp-for="PointEnd" class="control-label"></label>
+                                <br /> <br />
+                                <input asp-for="PointEnd" class="form-control" type="hidden" />
+                                <span asp-validation-for="PointEnd" class="text-danger"></span>
+                            </div>
+                            <div class="user-box form-group form-check ">
+                                <label class="form-check-label"></label>
+                                <br /> <br />
+                                <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
+                            </div>
+                            <div class="user-box">
+                                <label asp-for="BeginDate" class="control-label"></label>
+                                <br /> <br />
+                                <input asp-for="BeginDate" class="form-control" />
+                                <span asp-validation-for="BeginDate" class="text-danger"></span>
+                            </div>
+                            <div class="user-box">
+                                <label asp-for="EndDate" class="control-label"></label>
+                                <br /> <br />
+                                <input asp-for="EndDate" class="form-control" />
+                                <span asp-validation-for="EndDate" class="text-danger"></span>
+                            </div>
+                            <div class="user-box form-group form-check">
+                                <label class="form-check-label"></label>
 
-            <i class="fa fa-times fa-4x animated rotateIn" aria-hidden="true"></i>
+                                <input class="form-check-input" asp-for="CommonClass" /> @Html.DisplayNameFor(model => model.CommonClass)
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="DepartmentId" class="control-label"></label>
+                                <br /> <br />
+                                <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.DepartmentId" style="min-height: 5rem" type="hidden"></select>
+                                <span asp-validation-for="DepartmentId" class="text-danger"></span>
+                            </div>
+                            <div class="user-box">
+                                <label asp-for="SubjectId" class="control-label"></label>
+                                <br /> <br />
+                                <select asp-for="SubjectId" class="form-control" asp-items="ViewBag.SubjectId" style="min-height: 5rem" type="hidden"></select>
+                                <span asp-validation-for="SubjectId" class="text-danger"></span>
+                            </div>
 
-          </div>
+                            <a type="Submit" id="Submit" href="javascript:$('#formSub').submit();">
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              <span></span>
+                              Lưu
+                            </a>
 
-          <!--Footer-->
-          <div class="modal-footer" style="display:flex !important; justify-content: center !important;">
-            @*<a href="" class="btn btn-outline-danger">Xác nhận</a>
-            <a type="button" class="btn btn-danger waves-effect" data-bs-dismiss="modal">Không</a>*@
-             <button type="button" class="btn btn-default" data-dismiss="modal">Thôi khỏi</button>
-                <form asp-action="xoaKyDangKy" class="d-inline">
-                      <button type="submit" class="btn btn-warning btn-xs"><i class="fas fa-trash"></i> Xoá</button>
+                            <a asp-action="QuanLyLopHocPhan">
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                <span></span>
+                                Quay lại
+                              </a>
 
-                </form>
-          </div>
+                            <div class="user-box">
+                                <!-- <p>Thông báo gì đó</p> -->
+                                <p style="color: red">@TempData["notification"]</p>
+                            </div>
+                          </form>
+                    </div>
+                </div>
+                <div class="mt-auto">
+                    <p class="footer text-muted mb-0 mt-md-0 mt-4">Nếu bạn quên mật khẩu hoặc cần hỗ trợ về tài khoản, hãy liên hệ
+                        <span class="p-color me-1">Phòng CNTT</span>hoặc gọi số
+                        <span class="p-color ms-1">0123345697</span>
+                    </p>
+                </div>
+            </div>
+        
         </div>
-        <!--/.Content-->
-      </div>
     </div>
-    <!--Modal: modalConfirmDelete-->
+
+   
+</body>
+</html>
+
+

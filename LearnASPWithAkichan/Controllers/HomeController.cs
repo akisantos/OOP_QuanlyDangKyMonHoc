@@ -220,29 +220,37 @@ namespace LearnASPWithAkichan.Controllers
         }
         /*******/
         public async Task<IActionResult> DanhSachLop(string id)
+        {
+            string stuID = HttpContext.Session.GetString("studentID");
+            List<RegistClass> lopDaDangKy = await _db.RegistClasses.Where(x => x.StudentId == stuID).ToListAsync();
+            List<ClassSession> list = await _db.ClassSessions.Where(x => x.SubjectId == id).ToListAsync();
+            int checker = list.Count;
+            foreach (var item in list.ToList())
             {
-                string stuID = HttpContext.Session.GetString("studentID");
-                List<RegistClass> lopDaDangKy = await _db.RegistClasses.Where(x => x.StudentId == stuID).ToListAsync();
-                List<ClassSession> list = await _db.ClassSessions.Where(x => x.SubjectId == id).ToListAsync();
-                foreach (var item in list.ToList())
+                foreach (var item2 in lopDaDangKy.ToList())
                 {
-                    foreach (var item2 in lopDaDangKy.ToList())
+                    if (item2.ClassSessionId == item.Id)
                     {
-                        if (item2.ClassSessionId == item.Id)
-                        {
-                            list.Remove(item);
-                        }
+                        list.Remove(item);
                     }
+                }
 
-                }
-                if (list.Count() == 0)
-                {
-                    ViewData["Description"] = "Đã đăng ký hết !!!!! ";
-                }
-                return View(list);
+            }
+            if (list.Count() < checker)
+            {
+                ViewData["Description"] = "Bạn đã đăng ký môn này! Hãy huỷ lớp của môn này để chọn lớp khác!";
+                return View();
             }
 
-            // ---> lớp học phần trong kế hoạch | ngoài kế hoạch
+            if (list.Count() == 0)
+            {
+                ViewData["Description"] = "Đã đăng ký hết !!!!! ";
+                return View();
+            }
+            return View(list);
+        }
+
+        // ---> lớp học phần trong kế hoạch | ngoài kế hoạch
         public IActionResult ThongBao()
         {
             

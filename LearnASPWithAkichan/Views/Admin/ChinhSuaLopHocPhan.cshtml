@@ -36,59 +36,59 @@
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <input type="hidden" asp-for="Id" />
                             <div class="user-box">
-                                <label asp-for="Amount" class="control-label"></label>
+                                <label asp-for="Amount" class="control-label">Số lượng</label>
                                 <br /> <br />
                                 <input asp-for="Amount" class="form-control" />
                                 <span asp-validation-for="Amount" class="text-danger"></span>
                             </div>
                             <div class="user-box">
-                                <label asp-for="PointClass" class="control-label"></label>
+                                <label asp-for="PointClass" class="control-label">Điểm 1</label>
                                 <br /> <br />
                                 <input asp-for="PointClass" class="form-control" type="hidden" />
                                 <span asp-validation-for="PointClass" class="text-danger"></span>
                             </div>
                             <div class="user-box">
-                                <label asp-for="PointMid" class="control-label"></label>
+                                <label asp-for="PointMid" class="control-label">Điểm 2</label>
                                 <br /> <br />
                                 <input asp-for="PointMid" class="form-control" type="hidden" />
                                 <span asp-validation-for="PointMid" class="text-danger"></span>
                             </div>
                             <div class="user-box">
-                                <label asp-for="PointEnd" class="control-label"></label>
+                                <label asp-for="PointEnd" class="control-label">Điểm 3</label>
                                 <br /> <br />
                                 <input asp-for="PointEnd" class="form-control" type="hidden" />
                                 <span asp-validation-for="PointEnd" class="text-danger"></span>
                             </div>
                             <div class="user-box form-group form-check ">
-                                <label class="form-check-label"></label>
+                                <label class="control-label">Tình trạng</label>
                                 <br /> <br />
                                 <input class="form-check-input" asp-for="Active" /> @Html.DisplayNameFor(model => model.Active)
                             </div>
                             <div class="user-box">
-                                <label asp-for="BeginDate" class="control-label"></label>
+                                <label asp-for="BeginDate" class="control-label">Ngày bắt đầu</label>
                                 <br /> <br />
                                 <input asp-for="BeginDate" class="form-control" />
                                 <span asp-validation-for="BeginDate" class="text-danger"></span>
                             </div>
                             <div class="user-box">
-                                <label asp-for="EndDate" class="control-label"></label>
+                                <label asp-for="EndDate" class="control-label">Ngày kết thúc</label>
                                 <br /> <br />
                                 <input asp-for="EndDate" class="form-control" />
                                 <span asp-validation-for="EndDate" class="text-danger"></span>
                             </div>
                             <div class="user-box form-group form-check">
-                                <label class="form-check-label"></label>
-
+                                <label class="control-label">Là lớp học phần chung?</label>
+                                <br /> <br />
                                 <input class="form-check-input" asp-for="CommonClass" /> @Html.DisplayNameFor(model => model.CommonClass)
                             </div>
                             <div class="form-group">
-                                <label asp-for="DepartmentId" class="control-label"></label>
+                                <label asp-for="DepartmentId" class="control-label">Thuộc khoa</label>
                                 <br /> <br />
-                                <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.DepartmentId" style="min-height: 5rem" type="hidden" ></select>
+                                <select asp-for="DepartmentId" class="form-control" asp-items="ViewBag.DepartmentId" style="min-height: 5rem" type="hidden" onchange="updateSelectBoxVal()" ></select>
                                 <span asp-validation-for="DepartmentId" class="text-danger"></span>
                             </div>
                             <div class="user-box">
-                                <label asp-for="SubjectId" class="control-label"></label>
+                                <label asp-for="SubjectId" class="control-label">Môn học</label>
                                 <br /> <br />
                                 <select asp-for="SubjectId" class="form-control" asp-items="ViewBag.SubjectId" style="min-height: 5rem" type="hidden"></select>
                                 <span asp-validation-for="SubjectId" class="text-danger"></span>
@@ -114,6 +114,10 @@
                                 <!-- <p>Thông báo gì đó</p> -->
                                 <p style="color: red">@TempData["notification"]</p>
                             </div>
+
+                            <div class="user-box" style="display:none">
+                                <a class="form-control" type="hidden" asp-action="EditMonHocHelper" id="helper" style="display:none"></a>
+                            </div>
                           </form>
                     </div>
                 </div>
@@ -127,6 +131,17 @@
         
         </div>
     </div>
+
+    <script>
+        function updateSelectBoxVal(){
+ 
+             var s = $("#helper").attr("href");
+             $("#formSub").attr("action", s);
+             //console.log($("#formSub").attr("action"));
+             $("#formSub").submit();
+
+        }
+    </script>
 </body>
 </html>
 

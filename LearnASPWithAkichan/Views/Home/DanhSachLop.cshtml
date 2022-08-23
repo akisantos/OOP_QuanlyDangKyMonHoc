@@ -39,26 +39,31 @@
                 </div>      
                 
 
-                @foreach (var item in Model)
-                {
-                    <div class="contentCard">
-                    <div class="cardContent">
-                      <div class="cardMainContent">
-                        <p>Mã môn: @item.SubjectId</p>
-                        <h5>Mã lớp học phần: @item.Id</h5>
-                        <p>@item.BeginDate - @item.EndDate</p>
-                      </div>
-                      <div class="cardSubContent">
-                        <p>Số lượng: @item.Amount</p>
-                      </div>
-                    </div>
-                    <div class="cardImage">
-                      <div class="buttonAction">
-                        <a  class="btn btn-outline dangKy" asp-action="add" asp-controller="Home" asp-route-id="@item.Id" id="register-btn" disabled tabindex="-1">Đăng ký </a>
-                      </div>
-                    </div>
-                  </div>
-                }
+                    @{
+                        if (Model != null)
+                        {
+                            @foreach (var item in Model)
+                                {
+                                    <div class="contentCard">
+                                    <div class="cardContent">
+                                      <div class="cardMainContent">
+                                        <p>Mã môn: @item.SubjectId</p>
+                                        <h5>Mã lớp học phần: @item.Id</h5>
+                                        <p>@item.BeginDate - @item.EndDate</p>
+                                      </div>
+                                      <div class="cardSubContent">
+                                        <p>Số lượng: @item.Amount</p>
+                                      </div>
+                                    </div>
+                                    <div class="cardImage">
+                                      <div class="buttonAction">
+                                        <a  class="btn btn-outline dangKy" asp-action="add" asp-controller="Home" asp-route-id="@item.Id" id="register-btn" disabled tabindex="-1">Đăng ký </a>
+                                      </div>
+                                    </div>
+                                  </div>
+                                }
+                        }
+                    }
                 
             </div>
 
