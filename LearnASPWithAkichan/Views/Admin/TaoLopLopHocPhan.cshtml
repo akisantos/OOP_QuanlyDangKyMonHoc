@@ -35,13 +35,13 @@
                         <form asp-controller="Admin" asp-action="create_class_session" id="formSub" method="post">
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="user-box">
-                                <label asp-for="Id" class="control-label"></label>
+                                <label asp-for="Id" class="control-label">Mã lớp</label>
                                 <br /> <br />
                                 <input asp-for="Id" class="form-control" />
                                 <span asp-validation-for="Id" class="text-danger"></span>
                             </div>
                             <div class="user-box">
-                                <label asp-for="Amount" class="control-label"></label>
+                                <label asp-for="Amount" class="control-label">Số lượng</label>
                                 <br /> <br />
                                 <input asp-for="Amount" class="form-control" required type="number" max="40" min="1"/>
                                 <span asp-validation-for="Amount" class="text-danger"></span>
@@ -53,35 +53,35 @@
                                 <input asp-for="Active" class="form-control" value="true"/>
                                 <span asp-validation-for="Active" class="text-danger"></span>
                             </div>
-                            <div class="user-box">
-                                <label asp-for="PointClass" class="control-label"></label>
+                            <div class="user-box" style="display:none">
+                                <label asp-for="PointClass" class="control-label">Điểm 1</label>
                                 <br /> <br />
                                 <input asp-for="PointClass" class="form-control" hidden/>
                                 <span asp-validation-for="PointClass" class="text-danger"></span>
                             </div>
-                            <div class="user-box">
-                                <label asp-for="PointMid" class="control-label"></label>
+                            <div class="user-box" style="display:none">
+                                <label asp-for="PointMid" class="control-label">Điểm 2</label>
                                  <br /> <br />
                                 <input asp-for="PointMid" class="form-control" hidden />
                                 <span asp-validation-for="PointMid" class="text-danger"></span>
                             </div>
 
-                             <div class="user-box">
-                                <label asp-for="PointEnd" class="control-label"></label>
+                             <div class="user-box"style="display:none" >
+                                <label asp-for="PointEnd" class="control-label">Điểm 3</label>
                                 <br /> <br />
                                 <input asp-for="PointEnd" class="form-control" hidden />
                                 <span asp-validation-for="PointEnd" class="text-danger"></span>
                             </div>
 
                              <div class="user-box">
-                                <label asp-for="BeginDate" class="control-label"></label>
+                                <label asp-for="BeginDate" class="control-label">Bắt đầu</label>
                                 <br /> <br />
                                 <input asp-for="BeginDate" class="form-control" required type="date" />
                                 <span asp-validation-for="BeginDate" class="text-danger"></span>
                             </div>
 
                             <div class="user-box">
-                                <label asp-for="EndDate" class="control-label"></label>
+                                <label asp-for="EndDate" class="control-label"Kết thúc></label>
                                 <br /> <br />
                                 <input asp-for="EndDate" class="form-control" required type="date"/>
                                 <span asp-validation-for="EndDate" class="text-danger"></span>
@@ -89,6 +89,7 @@
 
                             <div class="user-box">
                                 <label class="form-check-label">
+                                    Loại lớp
                                 </label>
                                                              
                                     <br /> <br />
@@ -99,14 +100,14 @@
                             </div>
 
                             <div class="user-box">
-                                <label asp-for="DepartmentId" class="control-label"></label>
+                                <label asp-for="DepartmentId" class="control-label">Thuộc khoa</label>
                                 <br /> <br />
                                 <select asp-for="DepartmentId" class ="form-control" asp-items="ViewBag.DepartmentId" style="min-height: 5rem"></select>
 
 
                             <div class="user-box">
 
-                                <label asp-for="SubjectId" class="control-label"></label>
+                                <label asp-for="SubjectId" class="control-label">Thuộc môn</label>
                                 <br /> <br />
                                 <select asp-for="SubjectId" class ="form-control" asp-items="ViewBag.SubjectId" style="min-height: 5rem"></select>
                             </div>

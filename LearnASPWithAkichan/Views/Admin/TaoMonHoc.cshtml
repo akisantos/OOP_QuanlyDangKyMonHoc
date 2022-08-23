@@ -34,25 +34,25 @@
                         <form asp-controller="Admin" asp-action="CreateSubject" id="formSub" >
                             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
                             <div class="user-box">
-                                <label asp-for="Id" class="control-label"></label>
+                                <label asp-for="Id" class="control-label">Mã môn học</label>
                                 <br /> <br />
                                 <input asp-for="Id" class="form-control" />
                                 <span asp-validation-for="Id" class="text-danger"></span>
                             </div>
                             <div class="user-box">
-                                <label asp-for="Name" class="control-label"></label>
+                                <label asp-for="Name" class="control-label">Tên môn học</label>
                                 <br /> <br />
                                 <input asp-for="Name" class="form-control" />
                                 <span asp-validation-for="Name" class="text-danger"></span>
                             </div>
                             <div class="user-box">
-                                <label asp-for="Credits" class="control-label"></label>
+                                <label asp-for="Credits" class="control-label">Tín chỉ</label>
                                 <br /> <br />
                                 <input asp-for="Credits" class="form-control" min=0 type="number" />
                                 <span asp-validation-for="Credits" class="text-danger"></span>
                             </div>
                             <div class="user-box">
-                                <label asp-for="DepartmentId" class="control-label"></label>
+                                <label asp-for="DepartmentId" class="control-label">Thuộc khoa</label>
                                 <br /> <br />
                                 <select asp-for="DepartmentId" class ="form-control" asp-items="ViewBag.DepartmentId" style="min-height: 5rem"></select>
                             </div>
